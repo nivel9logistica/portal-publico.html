@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>NIVEL 9 - Red Logística de Excelencia</title>
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap');
+    
+    :root {
+      --brand: #ea580c;
+      --brand-hover: #c2410c;
+      --brand-light: #ffedd5;
+      --dark: #111113;
+      --bg: #f4f4f5;
+      --gray: #e4e4e7;
+      --text: #3f3f46;
+      --success: #10b981;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+    body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+    
+    /* ENCABEZADO CORPORATIVO */
+    .header-public { background: var(--dark); width: 100%; padding: 30px 20px; text-align: center; border-bottom: 5px solid var(--brand); box-shadow: 0 10px 30px rgba(0,0,0,0.15); border-radius: 0 0 25px 25px; position: relative; z-index: 10; }
+    .brand-logo-svg { height: 50px; width: auto; }
+    .hero-subtitle { color: #a1a1aa; font-size: 0.95rem; margin-top: 15px; max-width: 400px; margin-left: auto; margin-right: auto; line-height: 1.5; font-weight: 400; }
+    
+    /* CONTENEDOR PRINCIPAL */
+    .main-container { width: 100%; max-width: 600px; padding: 25px 15px; margin-top: -15px; }
+    
+    /* SELECTOR DE MÓDULO (PESTAÑAS) */
+    .tab-container { display: flex; background: white; border-radius: 16px; padding: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: 25px; border: 1px solid var(--gray); position: relative; z-index: 20; }
+    .tab-btn { flex: 1; padding: 15px 10px; border: none; background: transparent; border-radius: 12px; font-size: 1rem; font-weight: 700; color: var(--text); cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .tab-btn i { font-size: 1.5rem; }
+    .tab-btn.active { background: var(--brand-light); color: var(--brand); box-shadow: 0 4px 12px rgba(234,88,12,0.15); }
+    
+    /* FORMULARIOS */
+    .form-box { background: white; padding: 30px 25px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.06); border: 1px solid var(--gray); display: none; animation: slideUp 0.4s ease forwards; }
+    .form-box.active { display: block; }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    
+    .form-title { color: var(--dark); font-size: 1.4rem; font-weight: 800; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; border-bottom: 2px solid var(--brand-light); padding-bottom: 10px; }
+    
+    .input-group { margin-bottom: 18px; }
+    .input-group label { display: block; font-size: 0.85rem; font-weight: 800; color: #52525b; text-transform: uppercase; margin-bottom: 8px; }
+    .input-group input, .input-group select, .input-group textarea { width: 100%; padding: 14px 16px; border: 2px solid #e4e4e7; border-radius: 12px; font-size: 1rem; transition: all 0.3s; background: #fafafa; color: var(--dark); font-weight: 500; }
+    .input-group input:focus, .input-group select:focus, .input-group textarea:focus { outline: none; border-color: var(--brand); background: white; box-shadow: 0 0 0 4px rgba(234,88,12,0.1); }
+    .input-group textarea { resize: vertical; min-height: 90px; }
+    
+    /* BOTÓN SUBMIT */
+    .btn-submit { width: 100%; padding: 18px; background: var(--dark); color: white; border: none; border-radius: 14px; font-size: 1.1rem; font-weight: 800; cursor: pointer; transition: all 0.3s; display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 10px; text-transform: uppercase; letter-spacing: 1px; }
+    .btn-submit:hover { background: var(--brand); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(234,88,12,0.2); }
+    .btn-submit:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+    
+    /* PANTALLA DE ÉXITO */
+    .success-screen { display: none; text-align: center; padding: 40px 20px; flex-direction: column; align-items: center; justify-content: center; animation: slideUp 0.5s ease forwards; }
+    .success-screen i { font-size: 5rem; color: var(--success); margin-bottom: 20px; }
+    .success-screen h2 { color: var(--dark); font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; }
+    .success-screen p { color: var(--text); font-size: 1rem; line-height: 1.6; margin-bottom: 30px; }
+    
+    /* FOOTER */
+    .footer { margin-top: auto; padding: 25px; text-align: center; font-size: 0.8rem; color: #a1a1aa; font-weight: 600; width: 100%; }
+    .footer strong { color: var(--brand); }
+  </style>
+</head>
+<body>
+
+  <!-- ENCABEZADO -->
+  <header class="header-public">
+    <svg class="brand-logo-svg" viewBox="0 0 500 120">
+      <text x="70" y="70" font-family="'Outfit', sans-serif" font-weight="800" font-size="70" fill="#ffffff">NIVEL</text>
+      <text x="270" y="70" font-family="'Outfit', sans-serif" font-weight="800" font-size="75" fill="#ea580c">9</text>
+      <rect x="70" y="85" width="260" height="4" fill="#ea580c" />
+    </svg>
+    <p class="hero-subtitle">La red logística más rápida del país. Conectamos cargas y transportistas certificados en tiempo real.</p>
+  </header>
+
+  <main class="main-container">
+    
+    <div id="ui-container">
+      <!-- SELECTOR DE TIPO DE USUARIO -->
+      <div class="tab-container">
+        <button class="tab-btn active" onclick="switchTab('carga')" id="tab-carga">
+          <i class="fas fa-box-open"></i> Ofrecer Carga
+        </button>
+        <button class="tab-btn" onclick="switchTab('camion')" id="tab-camion">
+          <i class="fas fa-truck-moving"></i> Ofrecer Vehículo
+        </button>
+      </div>
+
+      <!-- FORMULARIO 1: DADOR DE CARGA -->
+      <div class="form-box active" id="form-carga">
+        <div class="form-title"><i class="fas fa-pallet" style="color:var(--brand);"></i> Publicar Carga</div>
+        
+        <div class="input-group">
+          <label>Empresa / Nombre Completo *</label>
+          <input type="text" id="cga-dador" placeholder="Ej: Distribuidora Norte S.A." required>
+        </div>
+        <div class="input-group">
+          <label>Teléfono (WhatsApp) *</label>
+          <input type="tel" id="cga-tel" placeholder="Ej: 3512233444" required>
+        </div>
+        
+        <div style="display:flex; gap:15px;">
+          <div class="input-group" style="flex:1;">
+            <label>Origen *</label>
+            <input type="text" id="cga-origen" placeholder="Ciudad de Origen" required>
+          </div>
+          <div class="input-group" style="flex:1;">
+            <label>Destino *</label>
+            <input type="text" id="cga-destino" placeholder="Ciudad de Destino" required>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>Tipo de Vehículo Necesario *</label>
+          <select id="cga-vehiculo">
+            <option value="Furgón">Furgón Cerrado</option>
+            <option value="Chasis">Camión Chasis</option>
+            <option value="Camión Semi">Camión (Semi)</option>
+            <option value="Camión Sider">Camión Sider</option>
+            <option value="Carga General">Carrocería Abierta / Carga General</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label>Descripción de la Mercadería *</label>
+          <textarea id="cga-desc" placeholder="Ej: 14 Pallets de alimento. Peso total 10 Toneladas." required></textarea>
+        </div>
+
+        <div class="input-group">
+          <label>Tarifa Ofrecida ($) (Opcional)</label>
+          <input type="number" id="cga-tarifa" placeholder="Monto a pagar. Deje en blanco si es a convenir">
+        </div>
+
+        <button class="btn-submit" id="btn-submit-carga" onclick="enviarCarga()">
+          <i class="fas fa-paper-plane"></i> Publicar Solicitud
+        </button>
+      </div>
+
+      <!-- FORMULARIO 2: TRANSPORTISTA -->
+      <div class="form-box" id="form-camion">
+        <div class="form-title"><i class="fas fa-route" style="color:var(--brand);"></i> Registrar Vehículo en Red</div>
+        
+        <div class="input-group">
+          <label>Nombre del Transportista / Chofer *</label>
+          <input type="text" id="trp-chofer" placeholder="Nombre completo" required>
+        </div>
+        <div class="input-group">
+          <label>Teléfono (WhatsApp) *</label>
+          <input type="tel" id="trp-tel" placeholder="Ej: 3512233444" required>
+        </div>
+
+        <div style="display:flex; gap:15px;">
+          <div class="input-group" style="flex:1;">
+            <label>Tipo de Unidad *</label>
+            <select id="trp-vehiculo">
+              <option value="Furgón">Furgón</option>
+              <option value="Chasis">Chasis</option>
+              <option value="Camión Semi">Semi-remolque</option>
+              <option value="Camión Sider">Sider</option>
+              <option value="Utilitario">Utilitario Pequeño</option>
+            </select>
+          </div>
+          <div class="input-group" style="flex:1;">
+            <label>Patente (Opcional)</label>
+            <input type="text" id="trp-patente" placeholder="AAA123">
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>Capacidad de Carga (Ton/M3)</label>
+          <input type="text" id="trp-capacidad" placeholder="Ej: 28 Toneladas">
+        </div>
+
+        <div class="input-group">
+          <label>Ubicación Actual / Ruta de Retorno *</label>
+          <input type="text" id="trp-ubicacion" placeholder="Ej: Vacío en Mendoza, busco retorno a Córdoba" required>
+        </div>
+
+        <button class="btn-submit" id="btn-submit-camion" onclick="enviarTransportista()">
+          <i class="fas fa-check-circle"></i> Unirme a la Red
+        </button>
+      </div>
+    </div>
+
+    <!-- PANTALLA DE ÉXITO (INICIALMENTE OCULTA) -->
+    <div class="success-screen" id="success-screen">
+      <i class="fas fa-check-circle"></i>
+      <h2 id="success-title">¡Recepción Exitosa!</h2>
+      <p id="success-message">Tus datos han ingresado a nuestro sistema central. Un agente de Nivel 9 se pondrá en contacto contigo a la brevedad.</p>
+      <button class="btn-submit" style="max-width:300px; background:var(--brand);" onclick="window.location.reload()">
+        Volver al Inicio
+      </button>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    Red Operativa Exclusiva de <br><strong>NIVEL 9 LOGÍSTICA DE EXCELENCIA</strong><br>© 2026
+  </footer>
+
+  <script>
+    // ⚠️ REEMPLAZAR ESTA URL POR LA DE TU GOOGLE APPS SCRIPT
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzJgp7Q0-LnufrbdYtB1nww9VPWIT-GDOHTGAmhk4qrp44CjhXTErniQQUGgrJofRJt/exec';
+
+    function switchTab(tab) {
+      document.getElementById('tab-carga').classList.remove('active');
+      document.getElementById('tab-camion').classList.remove('active');
+      document.getElementById('form-carga').classList.remove('active');
+      document.getElementById('form-camion').classList.remove('active');
+
+      if (tab === 'carga') {
+        document.getElementById('tab-carga').classList.add('active');
+        document.getElementById('form-carga').classList.add('active');
+      } else {
+        document.getElementById('tab-camion').classList.add('active');
+        document.getElementById('form-camion').classList.add('active');
+      }
+    }
+
+    // EL TRUCO DEL ARQUITECTO: Enviar los datos como "text/plain" evita los bloqueos de seguridad CORS de Google
+    async function enviarDatos(payload, btnId) {
+      const btn = document.getElementById(btnId);
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+      btn.disabled = true;
+
+      try {
+        await fetch(WEB_APP_URL, {
+          method: 'POST',
+          body: JSON.stringify(payload),
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' } // Crucial para evitar CORS en Google Script
+        });
+        
+        // Se ejecuta si no hubo errores de red
+        document.getElementById('ui-container').style.display = 'none';
+        document.getElementById('success-screen').style.display = 'flex';
+      } catch (error) {
+        alert("Hubo un problema de conexión. Por favor, intentá nuevamente.");
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
+    }
+
+    function enviarCarga() {
+      const dador = document.getElementById('cga-dador').value.trim();
+      const tel = document.getElementById('cga-tel').value.trim();
+      const origen = document.getElementById('cga-origen').value.trim();
+      const destino = document.getElementById('cga-destino').value.trim();
+      
+      if (!dador || !tel || !origen || !destino) {
+        alert("Por favor completá los campos obligatorios (*).");
+        return;
+      }
+
+      const payload = {
+        action: 'saveCarga',
+        id: 'WEB-CGA-' + Date.now(),
+        fecha: new Date().toLocaleDateString('es-AR'),
+        dador: dador,
+        telefono: tel,
+        origen: origen,
+        destino: destino,
+        vehiculo: document.getElementById('cga-vehiculo').value,
+        descripcion: document.getElementById('cga-desc').value,
+        tarifa: parseFloat(document.getElementById('cga-tarifa').value) || 0,
+        estado: 'Nueva (Web)' // Etiqueta para que sepas que vino de internet
+      };
+
+      document.getElementById('success-title').innerText = "¡Carga Publicada!";
+      document.getElementById('success-message').innerText = "Nuestro motor de búsqueda ya está procesando tu solicitud para asignarle la unidad ideal.";
+      enviarDatos(payload, 'btn-submit-carga');
+    }
+
+    function enviarTransportista() {
+      const chofer = document.getElementById('trp-chofer').value.trim();
+      const tel = document.getElementById('trp-tel').value.trim();
+      const ubicacion = document.getElementById('trp-ubicacion').value.trim();
+      
+      if (!chofer || !tel || !ubicacion) {
+        alert("Por favor completá los campos obligatorios (*).");
+        return;
+      }
+
+      const payload = {
+        action: 'saveTransportista',
+        id: 'WEB-TRP-' + Date.now(),
+        chofer: chofer,
+        telefono: tel,
+        patente: document.getElementById('trp-patente').value || 'A Confimar',
+        vehiculo: document.getElementById('trp-vehiculo').value,
+        capacidad: document.getElementById('trp-capacidad').value,
+        ubicacion: ubicacion,
+        seguro: 'Pendiente Auditoría'
+      };
+
+      document.getElementById('success-title').innerText = "¡Bienvenido a la Red!";
+      document.getElementById('success-message').innerText = "Tu vehículo ha sido posicionado en nuestro radar. Te contactaremos apenas coincidas con una carga.";
+      enviarDatos(payload, 'btn-submit-camion');
+    }
+  </script>
+</body>
+</html>
