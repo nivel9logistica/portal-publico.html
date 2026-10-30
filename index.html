@@ -11,7 +11,7 @@
 
     <style>
         /* =======================================================
-           ESTÉTICA DARK & ORANGE - NIVEL ALTO (FIX ILUMINACIÓN)
+           ESTÉTICA DARK & ORANGE - NIVEL ALTO
            ======================================================= */
         :root {
             --brand: #ea580c;
@@ -30,7 +30,6 @@
             background-color: var(--dark-bg); 
             color: var(--text-main); 
             overflow-x: hidden;
-            /* FIX DE ILUMINACIÓN: Opacidad bajó del 95% al 55%-70% */
             background-image: linear-gradient(rgba(17, 17, 19, 0.45), rgba(17, 17, 19, 0.70)), url('fondo-camiones.jfif');
             background-size: cover;
             background-position: center;
@@ -44,18 +43,17 @@
         .ticker-item { padding: 0 2rem; border-right: 1px solid rgba(255,255,255,0.3); }
         @keyframes ticker { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
 
-        /* HERO SECTION (Textos con Sombra Reforzada y Logo Centrado) */
+        /* HERO SECTION */
         .hero-section { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 120px 20px 40px; }
         .brand-logo-svg { height: 130px; width: auto; margin-bottom: 20px; filter: drop-shadow(0 10px 20px rgba(234,88,12,0.4)); }
         
-        /* Sombras ultra fuertes para que resalte sobre la foto iluminada */
         .hero-title { font-size: 3.5rem; font-weight: 900; color: white; line-height: 1.1; margin-bottom: 20px; max-width: 900px; text-transform: uppercase; text-shadow: 2px 4px 15px rgba(0,0,0,1); }
         .hero-subtitle { font-size: 1.4rem; font-weight: 600; color: #f4f4f5; max-width: 800px; line-height: 1.5; margin-bottom: 30px; text-shadow: 2px 4px 15px rgba(0,0,0,1); }
         
         .trust-badges { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-bottom: 50px; }
         .badge { background: rgba(17, 17, 19, 0.75); border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 50px; font-size: 0.95rem; font-weight: 800; color: var(--brand); backdrop-filter: blur(5px); box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
 
-        /* BOTONES DE ACCIÓN PRINCIPALES (Fix Min-width a 280px) */
+        /* BOTONES DE ACCIÓN PRINCIPALES */
         .action-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1000px; width: 100%; margin: 0 auto; padding: 0 20px 80px; }
         .action-card { background: rgba(17, 17, 19, 0.88); border: 1px solid var(--border-color); border-radius: 20px; padding: 40px 30px; text-align: center; backdrop-filter: blur(10px); transition: all 0.3s; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
         .action-card:hover { border-color: var(--brand); transform: translateY(-5px); box-shadow: 0 15px 30px rgba(234, 88, 12, 0.2); }
@@ -75,9 +73,9 @@
         .feature-item h4 { font-size: 1.3rem; margin-bottom: 10px; font-weight: 800; }
         .feature-item p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; }
 
-        /* MODALES (Formularios) */
+        /* MODALES */
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(8px); padding: 15px; }
-        .modal-content { background: var(--dark-surface); border: 1px solid var(--border-color); border-radius: 20px; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; }
+        .modal-content { background: var(--dark-surface); border: 1px solid var(--border-color); border-radius: 20px; width: 100%; max-width: 650px; max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; }
         .modal-header { padding: 25px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: var(--dark-surface); z-index: 10; }
         .modal-header h2 { font-size: 1.4rem; color: var(--brand); display: flex; align-items: center; gap: 10px; }
         .btn-close { background: transparent; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
@@ -87,7 +85,6 @@
         .form-group label { display: block; font-size: 0.9rem; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
         .form-group input, .form-group textarea { width: 100%; padding: 15px; background: var(--dark-surface-2); border: 1px solid var(--border-color); color: white; border-radius: 12px; font-size: 1rem; transition: 0.3s; }
         
-        /* FIX iOS/ANDROID SELECTORES */
         .form-group select { 
             width: 100%; padding: 15px; background-color: var(--dark-surface-2); border: 1px solid var(--border-color); color: white; border-radius: 12px; font-size: 1rem; transition: 0.3s;
             -webkit-appearance: none; -moz-appearance: none; appearance: none;
@@ -102,7 +99,6 @@
         .whatsapp-float { position: fixed; bottom: 30px; right: 30px; background: #25D366; color: white; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 10px 20px rgba(0,0,0,0.4); z-index: 900; transition: 0.3s; text-decoration: none; border: 2px solid rgba(255,255,255,0.2); }
         .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 15px 25px rgba(37, 211, 102, 0.5); }
 
-        /* RESPONSIVE */
         @media (max-width: 768px) {
             .hero-title { font-size: 2.2rem; }
             .hero-subtitle { font-size: 1.1rem; }
@@ -122,12 +118,15 @@
             <span class="ticker-item"><i class="fas fa-bolt"></i> Nueva Solicitud: CABA -> Mendoza (Furgón)</span>
             <span class="ticker-item"><i class="fas fa-truck"></i> Chofer Registrado: Juan M. (Rosario - Chasis)</span>
             <span class="ticker-item"><i class="fas fa-star"></i> Operación Finalizada: Arcor S.A. -> Sucursal Norte</span>
+            <span class="ticker-item"><i class="fas fa-check-circle"></i> Carga Asignada: Buenos Aires -> Rosario (Semi)</span>
+            <span class="ticker-item"><i class="fas fa-bolt"></i> Nueva Solicitud: Mendoza -> Corrientes (Furgón)</span>
+            <span class="ticker-item"><i class="fas fa-truck"></i> Chofer Registrado: Esteban D. (Coórdona - Chaisis con pala)</span>
+            <span class="ticker-item"><i class="fas fa-star"></i> Operación Finalizada: TradeSA -> Sucursal Rosario</span>
         </div>
     </div>
 
     <!-- SECCIÓN HERO -->
     <section class="hero-section">
-        <!-- FIX SVG LOGO: Viewbox recortado a 300px (Centrado Perfecto) -->
         <svg class="brand-logo-svg" viewBox="0 0 300 120">
             <text x="10" y="70" font-family="'Outfit', sans-serif" font-weight="900" font-size="75" fill="#ffffff">NIVEL</text>
             <text x="235" y="70" font-family="'Outfit', sans-serif" font-weight="900" font-size="80" fill="#ea580c">9</text>
@@ -160,9 +159,7 @@
             <i class="fas fa-truck-moving card-icon"></i>
             <h3>Red de Transportistas</h3>
             <p>Sumá tu camión a Nivel 9 y accedé a cargas exclusivas para evitar volver vacío. Si ya sos parte, informanos tu ubicación al instante.</p>
-            <!-- BOTÓN A: NUEVOS -->
             <button class="btn-giant" onclick="abrirModal('modalChoferNuevo')"><i class="fas fa-user-plus"></i> Sumar mi Camión a la Red</button>
-            <!-- BOTÓN B: SISTEMA DE FRICCIÓN CERO PARA EXISTENTES -->
             <button class="btn-giant btn-giant-outline" onclick="abrirModal('modalChoferExistente')"><i class="fas fa-map-marker-alt"></i> Ya soy parte: Informar Ubicación</button>
         </div>
     </section>
@@ -241,7 +238,7 @@
         </div>
     </div>
 
-    <!-- MODAL 2: CHOFER NUEVO (REGISTRO COMPLETO) -->
+    <!-- MODAL 2: CHOFER NUEVO (REGISTRO COMPLETO CON DETALLES TÉCNICOS) -->
     <div class="modal-overlay" id="modalChoferNuevo" onmousedown="if(event.target===this) cerrarModales()">
         <div class="modal-content">
             <div class="modal-header">
@@ -276,6 +273,24 @@
                             </select>
                         </div>
                     </div>
+
+                    <!-- NUEVA SECCIÓN DE PRECISIÓN TÉCNICA -->
+                    <div style="display:flex; gap:15px; flex-wrap: wrap;">
+                        <div class="form-group" style="flex:1; min-width: 200px;"><label>Marca / Modelo / Año *</label><input type="text" id="cn-marca-modelo" required placeholder="Ej: Mercedes Benz 710 (2004)"></div>
+                        <div class="form-group" style="flex:1; min-width: 200px;"><label>Carrocería / Equipamiento *</label>
+                            <select id="cn-carroceria" required>
+                                <option value="Furgón Cerrado / Paquetero">Furgón Cerrado / Paquetero</option>
+                                <option value="Furgón Térmico / Refrigerado">Furgón Térmico / Refrigerado</option>
+                                <option value="Sider / Arcos y Lona">Sider / Arcos y Lona</option>
+                                <option value="Baranda Volcadora / Lateral Desmontable">Baranda Volcadora / Lateral Desmontable</option>
+                                <option value="Camión Abierto / Playo">Camión Abierto / Playo</option>
+                                <option value="Con Pala Hidráulica / Elevadora">Con Pala Hidráulica / Elevadora</option>
+                                <option value="Plancha de Auxilio / Camilla">Plancha de Auxilio / Camilla</option>
+                                <option value="Carretón / Plataforma Baja">Carretón / Plataforma Baja</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div style="display:flex; gap:15px;">
                         <div class="form-group" style="flex:1;"><label>Capacidad (Tn o m3)</label><input type="text" id="cn-cap" placeholder="Ej: 28 Tn"></div>
                         <div class="form-group" style="flex:1;"><label>Patente Tractora</label><input type="text" id="cn-patente" placeholder="Ej: AF123XY"></div>
@@ -307,7 +322,6 @@
 
     <!-- SCRIPTS DE LÓGICA -->
     <script>
-        // ⚠️ ENLACE AL WEBHOOK DE GOOGLE APPS SCRIPT DE NIVEL 9
         const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzJgp7Q0-LnufrbdYtB1nww9VPWIT-GDOHTGAmhk4qrp44CjhXTErniQQUGgrJofRJt/exec';
 
         function abrirModal(id) { cerrarModales(); document.getElementById(id).style.display = 'flex'; }
@@ -326,9 +340,11 @@
                 telefono: document.getElementById('cn-tel').value,
                 tipo: document.getElementById('cn-vehiculo').value,
                 ubicacion: document.getElementById('cn-base').value,
+                marca_modelo: document.getElementById('cn-marca-modelo').value,
+                carroceria: document.getElementById('cn-carroceria').value,
                 capacidad: document.getElementById('cn-cap').value + ' | ' + document.getElementById('cn-especialidad').value,
                 patente: document.getElementById('cn-patente').value,
-                timestamp: new Date().toLocaleString('es-AR') // Traza oculta de hora y fecha
+                timestamp: new Date().toLocaleString('es-AR')
             };
 
             try {
@@ -361,7 +377,7 @@
                 contacto: document.getElementById('emp-nombre').value,
                 telefono: document.getElementById('emp-tel').value,
                 descripcion: "Solicitud Vía Web: " + document.getElementById('emp-detalles').value,
-                timestamp: new Date().toLocaleString('es-AR') // Traza oculta de hora y fecha
+                timestamp: new Date().toLocaleString('es-AR')
             };
 
             try {
@@ -384,7 +400,6 @@
             
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Actualizando GPS...'; btn.disabled = true;
             
-            // Simulación visual hasta que el endpoint esté activo
             setTimeout(() => {
                 alert("¡Ubicación Actualizada en la Mesa de Nivel 9! Estamos buscando cruces logísticos para sacarte de " + ubicacion + ".");
                 cerrarModales();
