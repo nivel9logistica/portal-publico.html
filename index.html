@@ -21,20 +21,26 @@
             --border-color: #3f3f46;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        html, body {
+            background-color: #111113 !important;
+            color: #f4f4f5 !important;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
         
         body { 
-            background-color: var(--dark-bg); 
-            color: var(--text-main); 
-            overflow-x: hidden;
-            background-image: linear-gradient(rgba(17, 17, 19, 0.45), rgba(17, 17, 19, 0.70)), url('fondo-camiones.jfif');
+            background-image: linear-gradient(rgba(17, 17, 19, 0.75), rgba(17, 17, 19, 0.85)), url('fondo-camiones.jfif');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            min-height: 100vh;
         }
 
-        /* TICKER ANIMADO */
+        * { box-sizing: border-box; }
+
+        /* TICKER SUPERIOR */
         .ticker-wrap { width: 100%; background: var(--brand); color: white; padding: 6px 0; overflow: hidden; position: fixed; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
         .ticker { display: inline-block; white-space: nowrap; padding-left: 100%; animation: ticker 25s linear infinite; font-size: 0.85rem; font-weight: 700; letter-spacing: 1px; }
         .ticker-item { padding: 0 2rem; border-right: 1px solid rgba(255,255,255,0.3); }
@@ -48,14 +54,14 @@
         .hero-subtitle { font-size: 1.4rem; font-weight: 600; color: #f4f4f5; max-width: 800px; line-height: 1.5; margin-bottom: 30px; text-shadow: 2px 4px 15px rgba(0,0,0,1); }
         
         .trust-badges { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-bottom: 50px; }
-        .badge { background: rgba(17, 17, 19, 0.75); border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 50px; font-size: 0.95rem; font-weight: 800; color: var(--brand); backdrop-filter: blur(5px); box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .badge { background: rgba(17, 17, 19, 0.85); border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 50px; font-size: 0.95rem; font-weight: 800; color: var(--brand); backdrop-filter: blur(5px); box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
 
-        /* BOTONES DE ACCIÓN PRINCIPALES */
+        /* TARJETAS DE ACCIÓN */
         .action-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1000px; width: 100%; margin: 0 auto; padding: 0 20px 80px; }
-        .action-card { background: rgba(17, 17, 19, 0.88); border: 1px solid var(--border-color); border-radius: 20px; padding: 40px 30px; text-align: center; backdrop-filter: blur(10px); transition: all 0.3s; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+        .action-card { background: rgba(24, 24, 27, 0.92) !important; border: 1px solid var(--border-color); border-radius: 20px; padding: 40px 30px; text-align: center; backdrop-filter: blur(10px); transition: all 0.3s; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
         .action-card:hover { border-color: var(--brand); transform: translateY(-5px); box-shadow: 0 15px 30px rgba(234, 88, 12, 0.2); }
         .card-icon { font-size: 3.5rem; color: var(--brand); margin-bottom: 20px; }
-        .action-card h3 { font-size: 1.8rem; font-weight: 800; margin-bottom: 15px; }
+        .action-card h3 { font-size: 1.8rem; font-weight: 800; margin-bottom: 15px; color: white; }
         .action-card p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.5; margin-bottom: 25px; }
         
         .btn-giant { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background: var(--brand); color: white; padding: 18px; border: none; border-radius: 12px; font-size: 1.2rem; font-weight: 800; cursor: pointer; transition: 0.3s; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(234, 88, 12, 0.3); }
@@ -63,18 +69,18 @@
         .btn-giant-outline { background: transparent; border: 2px solid var(--text-muted); color: var(--text-main); box-shadow: none; }
         .btn-giant-outline:hover { border-color: var(--brand); color: var(--brand); }
 
-        /* CARACTERÍSTICAS / BENEFICIOS */
+        /* BENEFICIOS */
         .features-section { background: rgba(17, 17, 19, 0.95); border-top: 1px solid var(--brand); padding: 80px 20px; }
         .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto; text-align: center; }
         .feature-item i { font-size: 2.5rem; color: var(--brand); margin-bottom: 15px; }
-        .feature-item h4 { font-size: 1.3rem; margin-bottom: 10px; font-weight: 800; }
+        .feature-item h4 { font-size: 1.3rem; margin-bottom: 10px; font-weight: 800; color: white; }
         .feature-item p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; }
 
         /* MODALES */
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(8px); padding: 15px; }
-        .modal-content { background: var(--dark-surface); border: 1px solid var(--border-color); border-radius: 20px; width: 100%; max-width: 650px; max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; }
+        .modal-content { background: var(--dark-surface) !important; border: 1px solid var(--border-color); border-radius: 20px; width: 100%; max-width: 650px; max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; color: white; }
         .modal-header { padding: 25px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: var(--dark-surface); z-index: 10; }
-        .modal-header h2 { font-size: 1.4rem; color: var(--brand); display: flex; align-items: center; gap: 10px; }
+        .modal-header h2 { font-size: 1.4rem; color: var(--brand); display: flex; align-items: center; gap: 10px; margin: 0; }
         .btn-close { background: transparent; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
         .modal-body { padding: 25px; }
         
@@ -115,10 +121,6 @@
             <span class="ticker-item"><i class="fas fa-bolt"></i> Nueva Solicitud: CABA -> Mendoza (Furgón)</span>
             <span class="ticker-item"><i class="fas fa-truck"></i> Chofer Registrado: Juan M. (Rosario - Chasis)</span>
             <span class="ticker-item"><i class="fas fa-star"></i> Operación Finalizada: Arcor S.A. -> Sucursal Norte</span>
-            <span class="ticker-item"><i class="fas fa-check-circle"></i> Carga Asignada: Buenos Aires -> Rosario (Semi)</span>
-            <span class="ticker-item"><i class="fas fa-bolt"></i> Nueva Solicitud: Mendoza -> Corrientes (Furgón)</span>
-            <span class="ticker-item"><i class="fas fa-truck"></i> Chofer Registrado: Esteban D. (Coórdona - Chaisis con pala)</span>
-            <span class="ticker-item"><i class="fas fa-star"></i> Operación Finalizada: TradeSA -> Sucursal Rosario</span
         </div>
     </div>
 
@@ -141,7 +143,7 @@
         </div>
     </section>
 
-    <!-- PANELES PRINCIPALES DE ACCIÓN -->
+    <!-- PANELES DE ACCIÓN -->
     <section class="action-container">
         <!-- Panel Empresas -->
         <div class="action-card">
@@ -182,16 +184,13 @@
         </div>
     </section>
 
-    <!-- BOTÓN FLOTANTE WHATSAPP -->
+    <!-- WHATSAPP FLOTANTE -->
     <a href="https://wa.me/5493517046541?text=Hola%20Nivel%209,%20los%20contacto%20desde%20el%20Portal%20Web.%20Quisiera%20m%C3%A1s%20informaci%C3%B3n." class="whatsapp-float" target="_blank" title="Contactar a Administración">
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <!-- =======================================================
-         MODALES DE FORMULARIOS
-         ======================================================= -->
-
-    <!-- MODAL 1: DADORES DE CARGA (EMPRESAS) -->
+    <!-- MODALES -->
+    <!-- MODAL 1: EMPRESAS -->
     <div class="modal-overlay" id="modalEmpresa" onmousedown="if(event.target===this) cerrarModales()">
         <div class="modal-content">
             <div class="modal-header">
@@ -235,7 +234,7 @@
         </div>
     </div>
 
-    <!-- MODAL 2: CHOFER NUEVO (REGISTRO COMPLETO + PATENTE ACOPLADO) -->
+    <!-- MODAL 2: CHOFER NUEVO -->
     <div class="modal-overlay" id="modalChoferNuevo" onmousedown="if(event.target===this) cerrarModales()">
         <div class="modal-content">
             <div class="modal-header">
@@ -299,7 +298,7 @@
         </div>
     </div>
 
-    <!-- MODAL 3: CHOFER EXISTENTE (ACTUALIZACIÓN RÁPIDA) -->
+    <!-- MODAL 3: CHOFER EXISTENTE -->
     <div class="modal-overlay" id="modalChoferExistente" onmousedown="if(event.target===this) cerrarModales()">
         <div class="modal-content" style="max-width: 450px;">
             <div class="modal-header">
@@ -317,7 +316,7 @@
         </div>
     </div>
 
-    <!-- SCRIPTS DE LÓGICA -->
+    <!-- SCRIPT LOGICA -->
     <script>
         const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzJgp7Q0-LnufrbdYtB1nww9VPWIT-GDOHTGAmhk4qrp44CjhXTErniQQUGgrJofRJt/exec';
 
@@ -393,7 +392,6 @@
         async function actualizarDisponibilidad(e) {
             e.preventDefault();
             const btn = e.target.querySelector('button[type="submit"]');
-            const tel = document.getElementById('ce-tel').value;
             const ubicacion = document.getElementById('ce-ubicacion').value;
             
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Actualizando GPS...'; btn.disabled = true;
