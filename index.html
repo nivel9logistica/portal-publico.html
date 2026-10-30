@@ -10,9 +10,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
     <style>
-        /* =======================================================
-           ESTÉTICA DARK & ORANGE - NIVEL ALTO
-           ======================================================= */
         :root {
             --brand: #ea580c;
             --brand-hover: #c2410c;
@@ -121,7 +118,7 @@
             <span class="ticker-item"><i class="fas fa-check-circle"></i> Carga Asignada: Buenos Aires -> Rosario (Semi)</span>
             <span class="ticker-item"><i class="fas fa-bolt"></i> Nueva Solicitud: Mendoza -> Corrientes (Furgón)</span>
             <span class="ticker-item"><i class="fas fa-truck"></i> Chofer Registrado: Esteban D. (Coórdona - Chaisis con pala)</span>
-            <span class="ticker-item"><i class="fas fa-star"></i> Operación Finalizada: TradeSA -> Sucursal Rosario</span>
+            <span class="ticker-item"><i class="fas fa-star"></i> Operación Finalizada: TradeSA -> Sucursal Rosario</span
         </div>
     </div>
 
@@ -238,7 +235,7 @@
         </div>
     </div>
 
-    <!-- MODAL 2: CHOFER NUEVO (REGISTRO COMPLETO CON DETALLES TÉCNICOS) -->
+    <!-- MODAL 2: CHOFER NUEVO (REGISTRO COMPLETO + PATENTE ACOPLADO) -->
     <div class="modal-overlay" id="modalChoferNuevo" onmousedown="if(event.target===this) cerrarModales()">
         <div class="modal-content">
             <div class="modal-header">
@@ -274,7 +271,6 @@
                         </div>
                     </div>
 
-                    <!-- NUEVA SECCIÓN DE PRECISIÓN TÉCNICA -->
                     <div style="display:flex; gap:15px; flex-wrap: wrap;">
                         <div class="form-group" style="flex:1; min-width: 200px;"><label>Marca / Modelo / Año *</label><input type="text" id="cn-marca-modelo" required placeholder="Ej: Mercedes Benz 710 (2004)"></div>
                         <div class="form-group" style="flex:1; min-width: 200px;"><label>Carrocería / Equipamiento *</label>
@@ -291,9 +287,10 @@
                         </div>
                     </div>
 
-                    <div style="display:flex; gap:15px;">
-                        <div class="form-group" style="flex:1;"><label>Capacidad (Tn o m3)</label><input type="text" id="cn-cap" placeholder="Ej: 28 Tn"></div>
-                        <div class="form-group" style="flex:1;"><label>Patente Tractora</label><input type="text" id="cn-patente" placeholder="Ej: AF123XY"></div>
+                    <div style="display:flex; gap:15px; flex-wrap: wrap;">
+                        <div class="form-group" style="flex:1; min-width:140px;"><label>Capacidad (Tn / m3)</label><input type="text" id="cn-cap" placeholder="Ej: 28 Tn"></div>
+                        <div class="form-group" style="flex:1; min-width:140px;"><label>Patente Tractora</label><input type="text" id="cn-patente" placeholder="Ej: AF123XY"></div>
+                        <div class="form-group" style="flex:1; min-width:140px;"><label>Patente Acoplado / Semi</label><input type="text" id="cn-patente-acoplado" placeholder="Ej: AA987ZZ"></div>
                     </div>
                     
                     <button type="submit" class="btn-giant"><i class="fas fa-check-circle"></i> Unirme a la Red Nivel 9</button>
@@ -344,6 +341,7 @@
                 carroceria: document.getElementById('cn-carroceria').value,
                 capacidad: document.getElementById('cn-cap').value + ' | ' + document.getElementById('cn-especialidad').value,
                 patente: document.getElementById('cn-patente').value,
+                patente_acoplado: document.getElementById('cn-patente-acoplado').value,
                 timestamp: new Date().toLocaleString('es-AR')
             };
 
