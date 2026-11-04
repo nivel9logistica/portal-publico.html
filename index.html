@@ -622,13 +622,15 @@
   </div>
 
   <script>
+ <script>
     // =========================================================================
-    // CREDENCIALES OFICIALES SUPABASE
+    // CREDENCIALES OFICIALES SUPABASE (VARIABLE RENOMBRADA: sbClient)
     // =========================================================================
     const SUPABASE_URL = 'https://yfrgqyezynojohqgkxjt.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_JAp9zWYr_ugkEkVg0WPI5A_gaA5I0sL';
 
-    const supabase = (window.supabase && typeof window.supabase.createClient === 'function')
+    // Usamos sbClient para evitar cualquier conflicto con window.supabase
+    const sbClient = (window.supabase && typeof window.supabase.createClient === 'function')
       ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
       : null;
 
@@ -675,8 +677,8 @@
       };
 
       try {
-        if (!supabase) throw new Error('Cliente Supabase no inicializado');
-        const { error } = await supabase.from('bolsa_cargas').insert([payload]);
+        if (!sbClient) throw new Error('Cliente Supabase no inicializado');
+        const { error } = await sbClient.from('bolsa_cargas').insert([payload]);
         if (error) throw error;
 
         const tarifaFormateada = Number(payload.tarifa) > 0 
@@ -720,8 +722,8 @@
       };
 
       try {
-        if (!supabase) throw new Error('Cliente Supabase no inicializado');
-        const { error } = await supabase.from('transportistas').insert([payload]);
+        if (!sbClient) throw new Error('Cliente Supabase no inicializado');
+        const { error } = await sbClient.from('transportistas').insert([payload]);
         if (error) throw error;
 
         mostrarModal(
@@ -738,7 +740,7 @@
       }
     }
 
-    // Funciones del Modal
+    // Control del Modal
     function mostrarModal(icono, titulo, desc) {
       document.getElementById('modalIcon').innerText = icono;
       document.getElementById('modalTitle').innerText = titulo;
