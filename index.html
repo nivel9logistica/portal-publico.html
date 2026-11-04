@@ -17,11 +17,11 @@
   <style>
     :root {
       --bg-dark: #09090b;
-      --card-bg: #18181b;
+      --card-bg: rgba(24, 24, 27, 0.92);
       --card-border: #27272a;
       --brand: #ea580c;
       --brand-hover: #f97316;
-      --brand-glow: rgba(234, 88, 12, 0.2);
+      --brand-glow: rgba(234, 88, 12, 0.25);
       --text-white: #ffffff;
       --text-muted: #a1a1aa;
       --text-dim: #71717a;
@@ -39,10 +39,14 @@
     }
 
     body {
-      background-color: var(--bg-dark);
+      background: 
+        linear-gradient(rgba(9, 9, 11, 0.86), rgba(9, 9, 11, 0.92)),
+        url('fondo-camiones.jfif') no-repeat center center fixed;
+      background-size: cover;
       color: var(--text-white);
       line-height: 1.5;
       padding: 24px 12px 60px;
+      min-height: 100vh;
     }
 
     .container {
@@ -55,7 +59,7 @@
       text-align: center;
       margin-bottom: 28px;
       padding-bottom: 18px;
-      border-bottom: 1px solid var(--card-border);
+      border-bottom: 1px solid rgba(39, 39, 42, 0.8);
     }
 
     .brand-logo-svg {
@@ -67,7 +71,7 @@
 
     .badge-sub {
       display: inline-block;
-      background: rgba(234, 88, 12, 0.12);
+      background: rgba(234, 88, 12, 0.15);
       border: 1px solid var(--brand);
       color: var(--brand);
       padding: 4px 14px;
@@ -83,6 +87,7 @@
       font-size: 1.55rem;
       font-weight: 800;
       color: var(--text-white);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
     }
 
     .header-desc {
@@ -91,7 +96,7 @@
       margin-top: 4px;
     }
 
-    /* VISTA 1: BOTONES PRINCIPALES EN PANTALLA DE INICIO */
+    /* VISTA 1: BOTONES PRINCIPALES */
     .selector-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -108,6 +113,7 @@
     .choice-card {
       background: var(--card-bg);
       border: 2px solid var(--card-border);
+      backdrop-filter: blur(8px);
       border-radius: 16px;
       padding: 34px 20px;
       text-align: center;
@@ -117,19 +123,19 @@
       flex-direction: column;
       align-items: center;
       gap: 12px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
     }
 
     .choice-card.card-dador:hover {
       border-color: var(--broker-color);
-      background: #101726;
+      background: rgba(16, 23, 38, 0.96);
       transform: translateY(-4px);
       box-shadow: 0 12px 30px var(--broker-glow);
     }
 
     .choice-card.card-transp:hover {
       border-color: var(--transp-color);
-      background: #0f1f1a;
+      background: rgba(15, 31, 26, 0.96);
       transform: translateY(-4px);
       box-shadow: 0 12px 30px var(--transp-glow);
     }
@@ -192,13 +198,14 @@
       border: 1px solid var(--transp-color);
     }
 
-    /* VISTA 2 Y 3: CONTENEDORES DE FORMULARIO */
+    /* VISTAS DE FORMULARIO */
     .card-form {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
+      backdrop-filter: blur(10px);
       border-radius: 16px;
       padding: 24px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.5);
       display: none;
       animation: fadeIn 0.25s ease-in-out;
     }
@@ -335,7 +342,6 @@
       margin-top: 2px;
     }
 
-    /* BOTONES DE ENVÍO */
     .btn-submit {
       width: 100%;
       border: none;
@@ -431,7 +437,7 @@
 <body>
 
   <div class="container">
-    <!-- ENCABEZADO CORPORATIVO ORIGINAL -->
+    <!-- ENCABEZADO CORPORATIVO -->
     <div class="header-box">
       <div class="badge-sub">Portal Oficial Nivel 9</div>
       <svg class="brand-logo-svg" viewBox="0 0 280 115">
@@ -448,9 +454,7 @@
       <p class="header-desc">Bolsa de Cargas &amp; Red Federal de Transporte</p>
     </div>
 
-    <!-- ========================================================
-         VISTA 1: BOTONES PRINCIPALES (ÚNICO VISIBLE AL INICIAR)
-         ======================================================== -->
+    <!-- VISTA 1: BOTONES PRINCIPALES -->
     <div id="vistaSeleccion" class="selector-grid">
       <div class="choice-card card-dador" onclick="window.abrirFormulario('dador')">
         <div class="choice-icon"><i class="fas fa-boxes"></i></div>
@@ -467,9 +471,7 @@
       </div>
     </div>
 
-    <!-- ========================================================
-         VISTA 2: FORMULARIO DADORES DE CARGA (BOLSA DE CARGAS)
-         ======================================================== -->
+    <!-- VISTA 2: FORMULARIO DADORES -->
     <div id="formDadorContainer" class="card-form">
       <div class="form-topbar">
         <div class="form-section-title" style="color:var(--broker-color);">
@@ -537,9 +539,7 @@
       </form>
     </div>
 
-    <!-- ========================================================
-         VISTA 3: FORMULARIO TRANSPORTISTAS (RED DE TRANSPORTE)
-         ======================================================== -->
+    <!-- VISTA 3: FORMULARIO TRANSPORTISTAS -->
     <div id="formTranspContainer" class="card-form">
       <div class="form-topbar">
         <div class="form-section-title" style="color:var(--transp-color);">
@@ -611,7 +611,7 @@
     </div>
   </div>
 
-  <!-- MODAL DE ÉXITO -->
+  <!-- MODAL DE CONFIRMACIÓN -->
   <div class="modal-overlay" id="modalExito">
     <div class="modal-box">
       <div class="modal-icon" id="modalIcon">✅</div>
@@ -626,7 +626,6 @@
     const CONFIG_URL = 'https://yfrgqyezynojohqgkxjt.supabase.co';
     const CONFIG_KEY = 'sb_publishable_JAp9zWYr_ugkEkVg0WPI5A_gaA5I0sL';
 
-    // Inicializador seguro del cliente Supabase
     function obtenerCliente() {
       if (window._instanciaSupabase) return window._instanciaSupabase;
       if (window.supabase && typeof window.supabase.createClient === 'function') {
@@ -636,7 +635,6 @@
       return null;
     }
 
-    // Funciones globales expuestas directamente a window
     window.abrirFormulario = function(tipo) {
       document.getElementById('vistaSeleccion').style.display = 'none';
       if (tipo === 'dador') {
