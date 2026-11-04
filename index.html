@@ -1,407 +1,610 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
-    <title>NIVEL 9 | Logística de Excelencia & Brokerage 3PL</title>
-    
-    <!-- Fuentes e Iconos -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portal Público Logístico | Nivel 9</title>
+  
+  <!-- Tipografía Outfit & Iconografía FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  <!-- SDK Oficial de Supabase v2 -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <style>
-        :root {
-            --brand: #ea580c;
-            --brand-hover: #c2410c;
-            --dark-bg: #111113;
-            --dark-surface: #18181b;
-            --dark-surface-2: #27272a;
-            --text-main: #f4f4f5;
-            --text-muted: #a1a1aa;
-            --border-color: #3f3f46;
-        }
+  <style>
+    :root {
+      --bg-dark: #09090b;
+      --card-bg: #18181b;
+      --card-border: #27272a;
+      --brand: #ea580c;
+      --brand-hover: #f97316;
+      --brand-glow: rgba(234, 88, 12, 0.2);
+      --text-white: #ffffff;
+      --text-muted: #a1a1aa;
+      --text-dim: #71717a;
+      --broker-color: #3b82f6;
+      --transp-color: #10b981;
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Outfit', sans-serif;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Outfit', sans-serif;
+    }
 
-        body { 
-            background-color: #111113;
-            color: #f4f4f5;
-            min-height: 100vh;
-            overflow-x: hidden;
-            background-image: linear-gradient(rgba(17, 17, 19, 0.75), rgba(17, 17, 19, 0.85)), url('fondo-camiones.jfif');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      line-height: 1.5;
+      padding: 20px 12px 60px;
+    }
 
-        /* TICKER ANIMADO */
-        .ticker-wrap { width: 100%; background: var(--brand); color: white; padding: 6px 0; overflow: hidden; position: fixed; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-        .ticker { display: inline-block; white-space: nowrap; padding-left: 100%; animation: ticker 25s linear infinite; font-size: 0.85rem; font-weight: 700; letter-spacing: 1px; }
-        .ticker-item { padding: 0 2rem; border-right: 1px solid rgba(255,255,255,0.3); }
-        @keyframes ticker { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+    }
 
-        /* HERO SECTION */
-        .hero-section { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 120px 20px 40px; }
-        .brand-logo-svg { height: 130px; width: auto; margin-bottom: 20px; filter: drop-shadow(0 10px 20px rgba(234,88,12,0.4)); }
-        
-        .hero-title { font-size: 3.5rem; font-weight: 900; color: white; line-height: 1.1; margin-bottom: 20px; max-width: 900px; text-transform: uppercase; text-shadow: 2px 4px 15px rgba(0,0,0,1); }
-        .hero-subtitle { font-size: 1.4rem; font-weight: 600; color: #f4f4f5; max-width: 800px; line-height: 1.5; margin-bottom: 30px; text-shadow: 2px 4px 15px rgba(0,0,0,1); }
-        
-        .trust-badges { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-bottom: 50px; }
-        .badge { background: rgba(17, 17, 19, 0.85); border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 50px; font-size: 0.95rem; font-weight: 800; color: var(--brand); backdrop-filter: blur(5px); box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+    /* CABECERA CORPORATIVA Y LOGO */
+    .header-box {
+      text-align: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--card-border);
+    }
 
-        /* PANELES DE ACCIÓN PRINCIPALES */
-        .action-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1000px; width: 100%; margin: 0 auto; padding: 0 20px 80px; }
-        .action-card { background: rgba(24, 24, 27, 0.92); border: 1px solid var(--border-color); border-radius: 20px; padding: 40px 30px; text-align: center; backdrop-filter: blur(10px); transition: all 0.3s; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
-        .action-card:hover { border-color: var(--brand); transform: translateY(-5px); box-shadow: 0 15px 30px rgba(234, 88, 12, 0.2); }
-        .card-icon { font-size: 3.5rem; color: var(--brand); margin-bottom: 20px; }
-        .action-card h3 { font-size: 1.8rem; font-weight: 800; margin-bottom: 15px; color: white; }
-        .action-card p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.5; margin-bottom: 25px; }
-        
-        .btn-giant { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background: var(--brand); color: white; padding: 18px; border: none; border-radius: 12px; font-size: 1.2rem; font-weight: 800; cursor: pointer; transition: 0.3s; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(234, 88, 12, 0.3); }
-        .btn-giant:hover { background: var(--brand-hover); }
-        .btn-giant-outline { background: transparent; border: 2px solid var(--text-muted); color: var(--text-main); box-shadow: none; }
-        .btn-giant-outline:hover { border-color: var(--brand); color: var(--brand); }
+    .brand-logo-svg {
+      height: 52px;
+      width: auto;
+      margin: 0 auto 10px;
+      display: block;
+    }
 
-        /* CARACTERÍSTICAS / BENEFICIOS */
-        .features-section { background: rgba(17, 17, 19, 0.95); border-top: 1px solid var(--brand); padding: 80px 20px; }
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto; text-align: center; }
-        .feature-item i { font-size: 2.5rem; color: var(--brand); margin-bottom: 15px; }
-        .feature-item h4 { font-size: 1.3rem; margin-bottom: 10px; font-weight: 800; color: white; }
-        .feature-item p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; }
+    .badge-sub {
+      display: inline-block;
+      background: rgba(234, 88, 12, 0.12);
+      border: 1px solid var(--brand);
+      color: var(--brand);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
 
-        /* MODALES */
-        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(8px); padding: 15px; }
-        .modal-content { background: var(--dark-surface); border: 1px solid var(--border-color); border-radius: 20px; width: 100%; max-width: 650px; max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; color: white; }
-        .modal-header { padding: 25px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: var(--dark-surface); z-index: 10; }
-        .modal-header h2 { font-size: 1.4rem; color: var(--brand); display: flex; align-items: center; gap: 10px; margin: 0; }
-        .btn-close { background: transparent; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
-        .modal-body { padding: 25px; }
-        
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; font-size: 0.9rem; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
-        .form-group input, .form-group textarea { width: 100%; padding: 15px; background: var(--dark-surface-2); border: 1px solid var(--border-color); color: white; border-radius: 12px; font-size: 1rem; transition: 0.3s; }
-        
-        .form-group select { 
-            width: 100%; padding: 15px; background-color: var(--dark-surface-2); border: 1px solid var(--border-color); color: white; border-radius: 12px; font-size: 1rem; transition: 0.3s;
-            -webkit-appearance: none; -moz-appearance: none; appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ea580c'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat; background-position: right 15px center; background-size: 20px; padding-right: 40px; 
-        }
-        
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(234,88,12,0.2); }
-        .form-group select option { background: var(--dark-surface-2); color: white; }
+    .header-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-white);
+    }
 
-        /* WHATSAPP FLOTANTE */
-        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; background: #25D366; color: white; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 10px 20px rgba(0,0,0,0.4); z-index: 900; transition: 0.3s; text-decoration: none; border: 2px solid rgba(255,255,255,0.2); }
-        .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 15px 25px rgba(37, 211, 102, 0.5); }
+    .header-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
 
-        @media (max-width: 768px) {
-            .hero-title { font-size: 2.2rem; }
-            .hero-subtitle { font-size: 1.1rem; }
-            .brand-logo-svg { height: 95px; }
-            .action-container { padding: 0 15px 50px; }
-            .action-card { padding: 30px 20px; }
-            .btn-giant { font-size: 1.05rem; padding: 15px; }
-        }
-    </style>
+    /* SELECTOR DE PERFIL (TABS PRINCIPALES) */
+    .profile-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .tab-btn {
+      background: #111113;
+      border: 2px solid var(--card-border);
+      border-radius: 12px;
+      padding: 16px 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tab-btn i {
+      font-size: 1.6rem;
+      color: var(--text-dim);
+      transition: color 0.2s;
+    }
+
+    .tab-btn h3 {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text-white);
+    }
+
+    .tab-btn p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .tab-btn.active-dador {
+      border-color: var(--broker-color);
+      background: rgba(59, 130, 246, 0.08);
+    }
+    .tab-btn.active-dador i {
+      color: var(--broker-color);
+    }
+
+    .tab-btn.active-transp {
+      border-color: var(--transp-color);
+      background: rgba(16, 185, 129, 0.08);
+    }
+    .tab-btn.active-transp i {
+      color: var(--transp-color);
+    }
+
+    /* TARJETA DEL FORMULARIO */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-white);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      padding-left: 12px;
+    }
+
+    .title-dador {
+      border-left: 4px solid var(--broker-color);
+    }
+    .title-transp {
+      border-left: 4px solid var(--transp-color);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    @media (min-width: 640px) {
+      .form-grid.two-cols {
+        grid-template-columns: 1fr 1fr;
+      }
+      .form-grid.three-cols {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    input, select, textarea {
+      background: #111113;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      color: #fff;
+      padding: 12px 14px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 2px var(--brand-glow);
+    }
+
+    .btn-submit {
+      width: 100%;
+      border: none;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+      transition: all 0.2s ease;
+      color: #fff;
+    }
+
+    .btn-dador {
+      background: var(--broker-color);
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    }
+    .btn-dador:hover {
+      background: #2563eb;
+      transform: translateY(-2px);
+    }
+
+    .btn-transp {
+      background: var(--transp-color);
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    }
+    .btn-transp:hover {
+      background: #059669;
+      transform: translateY(-2px);
+    }
+
+    /* MODAL DE CONFIRMACIÓN */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      padding: 15px;
+    }
+
+    .modal-box {
+      background: #18181b;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      max-width: 480px;
+      width: 100%;
+      padding: 26px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+    }
+
+    .modal-icon {
+      font-size: 3rem;
+      margin-bottom: 12px;
+    }
+
+    .modal-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .modal-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .btn-modal-close {
+      background: #27272a;
+      color: #fff;
+      border: none;
+      padding: 11px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+    }
+    .btn-modal-close:hover {
+      background: #3f3f46;
+    }
+  </style>
 </head>
 <body>
 
-    <!-- TICKER SUPERIOR -->
-    <div class="ticker-wrap">
-        <div class="ticker">
-            <span class="ticker-item"><i class="fas fa-check-circle"></i> Carga Asignada: Córdoba -> Rosario (Sider)</span>
-            <span class="ticker-item"><i class="fas fa-bolt"></i> Nueva Solicitud: CABA -> Mendoza (Furgón)</span>
-            <span class="ticker-item"><i class="fas fa-truck"></i> Chofer Registrado: Juan M. (Rosario - Chasis)</span>
-            <span class="ticker-item"><i class="fas fa-star"></i> Operación Finalizada: Arcor S.A. -> Sucursal Norte</span>
-        </div>
+  <div class="container">
+    <!-- CABECERA CON IDENTIDAD CORPORATIVA -->
+    <div class="header-box">
+      <div class="badge-sub">Portal Oficial de Operaciones 3PL</div>
+      <svg class="brand-logo-svg" viewBox="0 0 280 115">
+        <text x="140" y="72" text-anchor="middle" font-family="'Outfit', sans-serif" font-weight="800" font-size="70">
+          <tspan fill="#ffffff">NIVEL</tspan>
+          <tspan fill="#ea580c">9</tspan>
+        </text>
+        <rect x="20" y="86" width="240" height="4.5" fill="#ea580c" rx="2.5" />
+        <text x="140" y="106" text-anchor="middle" font-family="'Outfit', sans-serif" font-weight="600" font-size="12" fill="#a1a1aa" letter-spacing="3.5">
+          LOGISTICA DE EXCELENCIA
+        </text>
+      </svg>
+      <h1 class="header-title">Ecosistema Logístico Federal</h1>
+      <p class="header-desc">Publicá requerimientos de carga o sumá tus unidades de transporte a nuestra red activa.</p>
     </div>
 
-    <!-- SECCIÓN HERO -->
-    <section class="hero-section">
-        <svg class="brand-logo-svg" viewBox="0 0 300 120">
-            <text x="10" y="70" font-family="'Outfit', sans-serif" font-weight="900" font-size="75" fill="#ffffff">NIVEL</text>
-            <text x="235" y="70" font-family="'Outfit', sans-serif" font-weight="900" font-size="80" fill="#ea580c">9</text>
-            <rect x="10" y="85" width="280" height="5" fill="#ea580c" />
-            <text x="10" y="110" font-family="'Outfit', sans-serif" font-weight="700" font-size="14" fill="#f4f4f5" letter-spacing="5">LOGISTICA DE EXCELENCIA</text>
-        </svg>
-
-        <h1 class="hero-title">El Eslabón Inteligente en tu Cadena de Suministro</h1>
-        <p class="hero-subtitle">Conectamos a las empresas dadoras de carga con la red de transportistas más eficiente del país. Trazabilidad absoluta, conductores validados y precisión logística en cada kilómetro.</p>
-
-        <div class="trust-badges">
-            <span class="badge"><i class="fas fa-shield-alt"></i> Red Nacional Validada</span>
-            <span class="badge"><i class="fas fa-headset"></i> Soporte Operativo 24/7</span>
-            <span class="badge"><i class="fas fa-file-contract"></i> Transparencia Contractual</span>
-        </div>
-    </section>
-
-    <!-- PANELES DE ACCIÓN -->
-    <section class="action-container">
-        <!-- Panel Empresas -->
-        <div class="action-card">
-            <i class="fas fa-building card-icon"></i>
-            <h3>Dadores de Carga</h3>
-            <p>Publicá tu requerimiento logístico y nuestra red de unidades certificadas lo cotizará en minutos. Cobertura nacional para todo tipo de volumen.</p>
-            <button class="btn-giant" onclick="abrirModal('modalEmpresa')"><i class="fas fa-box-open"></i> Solicitar Flete / Cotización</button>
-        </div>
-
-        <!-- Panel Transportistas -->
-        <div class="action-card">
-            <i class="fas fa-truck-moving card-icon"></i>
-            <h3>Red de Transportistas</h3>
-            <p>Sumá tu camión a Nivel 9 y accedé a cargas exclusivas para evitar volver vacío. Si ya sos parte, informanos tu ubicación al instante.</p>
-            <button class="btn-giant" onclick="abrirModal('modalChoferNuevo')"><i class="fas fa-user-plus"></i> Sumar mi Camión a la Red</button>
-            <button class="btn-giant btn-giant-outline" onclick="abrirModal('modalChoferExistente')"><i class="fas fa-map-marker-alt"></i> Ya soy parte: Informar Ubicación</button>
-        </div>
-    </section>
-
-    <!-- CARACTERÍSTICAS -->
-    <section class="features-section">
-        <div class="features-grid">
-            <div class="feature-item">
-                <i class="fas fa-sync-alt"></i>
-                <h4>Viajes de Retorno Efectivos</h4>
-                <p>Optimizamos las rutas. No vuelvas vacío, conectamos tu ubicación de descarga con dadores locales.</p>
-            </div>
-            <div class="feature-item">
-                <i class="fas fa-mobile-alt"></i>
-                <h4>Cero Burocracia Logística</h4>
-                <p>Actualizá tu ubicación de disponibilidad en 10 segundos, directamente desde tu celular, sin contraseñas.</p>
-            </div>
-            <div class="feature-item">
-                <i class="fas fa-file-invoice-dollar"></i>
-                <h4>Transparencia Total</h4>
-                <p>Condiciones de trabajo claras y liquidaciones exactas garantizadas, sin sorpresas ni letra chica.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- WHATSAPP FLOTANTE -->
-    <a href="https://wa.me/5493517046541?text=Hola%20Nivel%209,%20los%20contacto%20desde%20el%20Portal%20Web.%20Quisiera%20m%C3%A1s%20informaci%C3%B3n." class="whatsapp-float" target="_blank" title="Contactar a Administración">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-
-    <!-- MODALES -->
-    <!-- MODAL 1: EMPRESAS -->
-    <div class="modal-overlay" id="modalEmpresa" onmousedown="if(event.target===this) cerrarModales()">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2><i class="fas fa-building"></i> Requerimiento de Flete</h2>
-                <button class="btn-close" onclick="cerrarModales()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form id="formEmpresa" onsubmit="enviarCotizacion(event)">
-                    <div class="form-group"><label>Empresa / Razón Social *</label><input type="text" id="emp-nombre" required placeholder="Ej: Arcor S.A."></div>
-                    <div class="form-group"><label>WhatsApp / Teléfono *</label><input type="tel" id="emp-tel" required placeholder="Ej: 3512233444"></div>
-                    <div style="display:flex; gap:15px;">
-                        <div class="form-group" style="flex:1;"><label>Origen (Ciudad) *</label><input type="text" id="emp-origen" required placeholder="Ej: Córdoba"></div>
-                        <div class="form-group" style="flex:1;"><label>Destino (Ciudad) *</label><input type="text" id="emp-destino" required placeholder="Ej: Rosario"></div>
-                    </div>
-                    <div class="form-group">
-                        <label>Tipo de Carga Ppal.</label>
-                        <select id="emp-tipo-carga">
-                            <option value="Cargas Generales">Cargas Generales (Cajas, Bultos)</option>
-                            <option value="Carga Paletizada">Carga Paletizada</option>
-                            <option value="Cadena de Frío">Cadena de Frío / Refrigerada</option>
-                            <option value="Carga a Granel">Carga a Granel (Áridos, Cereales)</option>
-                            <option value="Maquinaria y Pesada">Maquinaria y Carga Pesada</option>
-                            <option value="Mudanzas y Muebles">Mudanzas / Mobiliario</option>
-                            <option value="Carga Peligrosa IMO">Carga Peligrosa (IMO)</option>
-                        </select>
-                    </div>
-                    <div class="form-group"><label>Vehículo Sugerido (Opcional)</label>
-                        <select id="emp-vehiculo">
-                            <option value="Indistinto">No lo sé / Asesorarme</option>
-                            <option value="Furgón">Furgón</option>
-                            <option value="Chasis">Chasis</option>
-                            <option value="Camión Semi">Camión Semi</option>
-                            <option value="Sider">Sider</option>
-                            <option value="Balancín">Balancín</option>
-                        </select>
-                    </div>
-                    <div class="form-group"><label>Detalles / Volumen / Peso</label><textarea id="emp-detalles" rows="3" placeholder="Ej: 15 Pallets, 10 Toneladas. Carga a las 08:00hs."></textarea></div>
-                    <button type="submit" class="btn-giant"><i class="fas fa-paper-plane"></i> Enviar Solicitud a Nivel 9</button>
-                </form>
-            </div>
-        </div>
+    <!-- SELECTOR DE PERFILES -->
+    <div class="profile-tabs">
+      <div class="tab-btn active-dador" id="tabDador" onclick="cambiarPerfil('dador')">
+        <i class="fas fa-boxes"></i>
+        <h3>Soy Dador de Carga</h3>
+        <p>Publicar flete, mudanza o viaje corporativo</p>
+      </div>
+      <div class="tab-btn" id="tabTransp" onclick="cambiarPerfil('transp')">
+        <i class="fas fa-truck-moving"></i>
+        <h3>Soy Transportista</h3>
+        <p>Registrar unidad / Recibir ofertas de viaje</p>
+      </div>
     </div>
 
-    <!-- MODAL 2: CHOFER NUEVO -->
-    <div class="modal-overlay" id="modalChoferNuevo" onmousedown="if(event.target===this) cerrarModales()">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2><i class="fas fa-truck"></i> Empadronamiento a la Red</h2>
-                <button class="btn-close" onclick="cerrarModales()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form id="formChoferNuevo" onsubmit="registrarChofer(event)">
-                    <div class="form-group"><label>Nombre del Titular / Chofer *</label><input type="text" id="cn-nombre" required placeholder="Ej: Mario Gómez"></div>
-                    <div class="form-group"><label>WhatsApp (Línea Principal) *</label><input type="tel" id="cn-tel" required placeholder="Ej: 3512233444"></div>
-                    <div class="form-group"><label>Ciudad Base de Residencia *</label><input type="text" id="cn-base" required placeholder="Ej: Mendoza Capital"></div>
-                    
-                    <div style="display:flex; gap:15px; flex-wrap: wrap;">
-                        <div class="form-group" style="flex:1; min-width: 200px;"><label>Tipo de Unidad *</label>
-                            <select id="cn-vehiculo" required>
-                                <option value="Furgón">Furgón</option>
-                                <option value="Chasis">Chasis</option>
-                                <option value="Camión Semi">Camión Semi</option>
-                                <option value="Sider">Sider</option>
-                                <option value="Balancín">Balancín</option>
-                            </select>
-                        </div>
-                        <div class="form-group" style="flex:1; min-width: 200px;"><label>Especialidad de Carga *</label>
-                            <select id="cn-especialidad" required>
-                                <option value="Cargas Generales">Cargas Generales</option>
-                                <option value="Carga Paletizada">Carga Paletizada</option>
-                                <option value="Cadena de Frío">Cadena de Frío (Térmico)</option>
-                                <option value="Carga a Granel">Carga a Granel</option>
-                                <option value="Maquinaria y Pesada">Pesada / Carretón</option>
-                                <option value="Mudanzas y Muebles">Mudanzas (Con Peones)</option>
-                                <option value="Carga Peligrosa IMO">Cargas IMO</option>
-                            </select>
-                        </div>
-                    </div>
+    <!-- ========================================================
+         FORMULARIO 1: DADORES DE CARGA (BOLSA DE CARGAS)
+         ======================================================== -->
+    <div id="formDadorContainer" class="card">
+      <div class="card-title title-dador">
+        <i class="fas fa-bullhorn" style="color:var(--broker-color);"></i> Publicar Nueva Oferta de Carga (Bolsa 3PL)
+      </div>
 
-                    <div style="display:flex; gap:15px; flex-wrap: wrap;">
-                        <div class="form-group" style="flex:1; min-width: 200px;"><label>Marca / Modelo / Año *</label><input type="text" id="cn-marca-modelo" required placeholder="Ej: Mercedes Benz 710 (2004)"></div>
-                        <div class="form-group" style="flex:1; min-width: 200px;"><label>Carrocería / Equipamiento *</label>
-                            <select id="cn-carroceria" required>
-                                <option value="Furgón Cerrado / Paquetero">Furgón Cerrado / Paquetero</option>
-                                <option value="Furgón Térmico / Refrigerado">Furgón Térmico / Refrigerado</option>
-                                <option value="Sider / Arcos y Lona">Sider / Arcos y Lona</option>
-                                <option value="Baranda Volcadora / Lateral Desmontable">Baranda Volcadora / Lateral Desmontable</option>
-                                <option value="Camión Abierto / Playo">Camión Abierto / Playo</option>
-                                <option value="Con Pala Hidráulica / Elevadora">Con Pala Hidráulica / Elevadora</option>
-                                <option value="Plancha de Auxilio / Camilla">Plancha de Auxilio / Camilla</option>
-                                <option value="Carretón / Plataforma Baja">Carretón / Plataforma Baja</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div style="display:flex; gap:15px; flex-wrap: wrap;">
-                        <div class="form-group" style="flex:1; min-width:140px;"><label>Capacidad (Tn / m3)</label><input type="text" id="cn-cap" placeholder="Ej: 28 Tn"></div>
-                        <div class="form-group" style="flex:1; min-width:140px;"><label>Patente Tractora</label><input type="text" id="cn-patente" placeholder="Ej: AF123XY"></div>
-                        <div class="form-group" style="flex:1; min-width:140px;"><label>Patente Acoplado / Semi</label><input type="text" id="cn-patente-acoplado" placeholder="Ej: AA987ZZ"></div>
-                    </div>
-                    
-                    <button type="submit" class="btn-giant"><i class="fas fa-check-circle"></i> Unirme a la Red Nivel 9</button>
-                </form>
-            </div>
+      <form id="formDador" onsubmit="enviarCarga(event)">
+        <div class="form-grid two-cols">
+          <div class="form-group">
+            <label>Empresa / Contacto Responsable *</label>
+            <input type="text" id="dador_contacto" placeholder="Ej: Logística Arcor / Mario Casas" required />
+          </div>
+          <div class="form-group">
+            <label>Teléfono Celular / WhatsApp *</label>
+            <input type="tel" id="dador_telefono" placeholder="Ej: 3512345678 (Sin 0 ni 15)" required />
+          </div>
+          <div class="form-group">
+            <label>Plaza de Origen (Ciudad y Provincia) *</label>
+            <input type="text" id="dador_origen" placeholder="Ej: Córdoba Capital" required />
+          </div>
+          <div class="form-group">
+            <label>Plaza de Destino (Ciudad y Provincia) *</label>
+            <input type="text" id="dador_destino" placeholder="Ej: Rosario, Santa Fe" required />
+          </div>
+          <div class="form-group">
+            <label>Tipo de Vehículo Requerido *</label>
+            <select id="dador_vehiculo" required>
+              <option value="Furgón">Furgón (Sprinter / Daily)</option>
+              <option value="Chasis">Chasis</option>
+              <option value="Balancín">Balancín</option>
+              <option value="Camión Semi">Camión Semi</option>
+              <option value="Sider">Sider</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Peso / Volumen Estimado</label>
+            <input type="text" id="dador_peso" placeholder="Ej: 14 Pallets / 12 Tn / 20 m³" />
+          </div>
+          <div class="form-group full">
+            <label>Tarifa Neta Ofertada al Transporte ($ ARS)</label>
+            <input type="number" id="dador_tarifa" placeholder="Ej: 850000 (Dejar en 0 si es a cotizar)" />
+          </div>
+          <div class="form-group full">
+            <label>Detalle Técnico de la Carga y Requisitos Operativos</label>
+            <textarea id="dador_desc" rows="3" placeholder="Ej: Pallets cerrados con film, requiere lona y fajas. Carga el día viernes 08:00 hs..."></textarea>
+          </div>
         </div>
+
+        <button type="submit" id="btnSubmitDador" class="btn-submit btn-dador">
+          <i class="fas fa-cloud-upload-alt"></i> Publicar en Bolsa de Cargas
+        </button>
+      </form>
     </div>
 
-    <!-- MODAL 3: CHOFER EXISTENTE -->
-    <div class="modal-overlay" id="modalChoferExistente" onmousedown="if(event.target===this) cerrarModales()">
-        <div class="modal-content" style="max-width: 450px;">
-            <div class="modal-header">
-                <h2><i class="fas fa-map-marker-alt"></i> Reportar Disponibilidad</h2>
-                <button class="btn-close" onclick="cerrarModales()">&times;</button>
-            </div>
-            <div class="modal-body" style="text-align: center;">
-                <p style="color: var(--text-muted); margin-bottom: 20px; font-size:0.95rem;">Si ya estás registrado en nuestra red, ingresá tu número de WhatsApp. El sistema actualizará tu ubicación actual sin llenar formularios largos.</p>
-                <form id="formChoferExistente" onsubmit="actualizarDisponibilidad(event)">
-                    <div class="form-group" style="text-align: left;"><label>Mi Número de WhatsApp *</label><input type="tel" id="ce-tel" required placeholder="Ej: 3512233444" style="font-size:1.2rem; text-align:center; letter-spacing:2px; font-weight:800; color:var(--brand);"></div>
-                    <div class="form-group" style="text-align: left;"><label>Ciudad donde estoy Vacío AHORA *</label><input type="text" id="ce-ubicacion" required placeholder="Ej: San Miguel de Tucumán"></div>
-                    <button type="submit" class="btn-giant" style="background: #10b981;"><i class="fas fa-satellite-dish"></i> Emitir Señal de Carga</button>
-                </form>
-            </div>
+    <!-- ========================================================
+         FORMULARIO 2: TRANSPORTISTAS (RED DE TRANSPORTE)
+         ======================================================== -->
+    <div id="formTranspContainer" class="card" style="display:none;">
+      <div class="card-title title-transp">
+        <i class="fas fa-id-card" style="color:var(--transp-color);"></i> Registro de Unidad en Red de Flota
+      </div>
+
+      <form id="formTransp" onsubmit="enviarTransportista(event)">
+        <div class="form-grid two-cols">
+          <div class="form-group">
+            <label>Nombre del Titular / Chofer *</label>
+            <input type="text" id="tr_nombre" placeholder="Ej: Roberto Gómez" required />
+          </div>
+          <div class="form-group">
+            <label>WhatsApp Principal *</label>
+            <input type="tel" id="tr_telefono" placeholder="Ej: 3512345678" required />
+          </div>
+          <div class="form-group">
+            <label>Ubicación Habitual / Base Operativa *</label>
+            <input type="text" id="tr_ubicacion" placeholder="Ej: Río Cuarto, Córdoba" required />
+          </div>
+          <div class="form-group">
+            <label>Tipo de Vehículo *</label>
+            <select id="tr_tipo" required>
+              <option value="Furgón">Furgón (Sprinter / Daily)</option>
+              <option value="Chasis">Chasis</option>
+              <option value="Balancín">Balancín</option>
+              <option value="Camión Semi">Camión Semi</option>
+              <option value="Sider">Sider</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Marca / Modelo / Año</label>
+            <input type="text" id="tr_modelo" placeholder="Ej: Mercedes Benz Sprinter 414" />
+          </div>
+          <div class="form-group">
+            <label>Tipo de Carrocería *</label>
+            <select id="tr_carroceria">
+              <option value="Furgón Cerrado / Paquetero">Furgón Cerrado / Paquetero</option>
+              <option value="Furgón Térmico / Refrigerado">Furgón Térmico / Refrigerado</option>
+              <option value="Sider / Arcos y Lona">Sider / Arcos y Lona</option>
+              <option value="Baranda Volcadora / Lateral">Baranda Volcadora / Lateral</option>
+              <option value="Camión Abierto / Playo">Camión Abierto / Playo</option>
+              <option value="Con Pala Hidráulica">Con Pala Hidráulica</option>
+              <option value="Plancha de Auxilio">Plancha de Auxilio</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Capacidad Útil (Kg / Tn)</label>
+            <input type="text" id="tr_capacidad" placeholder="Ej: 3.500 Kg / 28 Tn" />
+          </div>
+          <div class="form-group">
+            <label>Patente Tractora *</label>
+            <input type="text" id="tr_patente" placeholder="Ej: AF123XY" required />
+          </div>
+          <div class="form-group full">
+            <label>Patente Semi / Acoplado (Opcional)</label>
+            <input type="text" id="tr_acoplado" placeholder="Ej: AA987ZZ (Si aplica)" />
+          </div>
         </div>
+
+        <button type="submit" id="btnSubmitTransp" class="btn-submit btn-transp">
+          <i class="fas fa-check-circle"></i> Registrarme en la Red Nivel 9
+        </button>
+      </form>
     </div>
+  </div>
 
-    <!-- SCRIPT LOGICA -->
-    <script>
-        const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzJgp7Q0-LnufrbdYtB1nww9VPWIT-GDOHTGAmhk4qrp44CjhXTErniQQUGgrJofRJt/exec';
+  <!-- MODAL DE ÉXITO -->
+  <div class="modal-overlay" id="modalExito">
+    <div class="modal-box">
+      <div class="modal-icon" id="modalIcon">✅</div>
+      <h2 class="modal-title" id="modalTitle">¡Registro Exitoso!</h2>
+      <p class="modal-desc" id="modalDesc">Los datos han sido incorporados en tiempo real al sistema operativo de Nivel 9.</p>
+      <button class="btn-modal-close" onclick="cerrarModal()">Aceptar y Continuar</button>
+    </div>
+  </div>
 
-        function abrirModal(id) { cerrarModales(); document.getElementById(id).style.display = 'flex'; }
-        function cerrarModales() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
+  <script>
+    // =========================================================================
+    // CONEXIÓN DIRECTA CON SUPABASE (TUS CREDENCIALES EXACTAS)
+    // =========================================================================
+    const SUPABASE_URL = 'https://yfrgqyezynojohqgkxjt.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_JAp9zWYr_ugkEkVg0WPI5A_gaA5I0sL';
 
-        async function registrarChofer(e) {
-            e.preventDefault();
-            const btn = e.target.querySelector('button[type="submit"]');
-            const textoOriginal = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registrando en Base...'; btn.disabled = true;
+    const supabase = (window.supabase && typeof window.supabase.createClient === 'function')
+      ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+      : null;
 
-            const payload = {
-                action: 'saveTransportista',
-                id: 'TRANSP-' + Date.now(),
-                nombre: document.getElementById('cn-nombre').value,
-                telefono: document.getElementById('cn-tel').value,
-                tipo: document.getElementById('cn-vehiculo').value,
-                ubicacion: document.getElementById('cn-base').value,
-                marca_modelo: document.getElementById('cn-marca-modelo').value,
-                carroceria: document.getElementById('cn-carroceria').value,
-                capacidad: document.getElementById('cn-cap').value + ' | ' + document.getElementById('cn-especialidad').value,
-                patente: document.getElementById('cn-patente').value,
-                patente_acoplado: document.getElementById('cn-patente-acoplado').value,
-                timestamp: new Date().toLocaleString('es-AR')
-            };
+    // Conmutador de perfiles
+    function cambiarPerfil(perfil) {
+      const tabDador = document.getElementById('tabDador');
+      const tabTransp = document.getElementById('tabTransp');
+      const formDador = document.getElementById('formDadorContainer');
+      const formTransp = document.getElementById('formTranspContainer');
 
-            try {
-                await fetch(WEBHOOK_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) });
-                alert("¡Excelente! Estás registrado en la Flota de Nivel 9. Nos contactaremos con vos apenas tengamos cargas en tu zona.");
-                cerrarModales();
-                e.target.reset();
-            } catch (err) {
-                alert("Hubo un error de conexión, pero tu solicitud fue recibida localmente. Reintentá en unos minutos.");
-            } finally {
-                btn.innerHTML = textoOriginal; btn.disabled = false;
-            }
-        }
+      if (perfil === 'dador') {
+        tabDador.className = 'tab-btn active-dador';
+        tabTransp.className = 'tab-btn';
+        formDador.style.display = 'block';
+        formTransp.style.display = 'none';
+      } else {
+        tabDador.className = 'tab-btn';
+        tabTransp.className = 'tab-btn active-transp';
+        formDador.style.display = 'none';
+        formTransp.style.display = 'block';
+      }
+    }
 
-        async function enviarCotizacion(e) {
-            e.preventDefault();
-            const btn = e.target.querySelector('button[type="submit"]');
-            const textoOriginal = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando Solicitud...'; btn.disabled = true;
+    // =========================================================================
+    // 1. ENVÍO DE DADORES -> TABLA "bolsa_cargas" EN SUPABASE
+    // =========================================================================
+    async function enviarCarga(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnSubmitDador');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Publicando carga...';
 
-            const payload = {
-                action: 'saveCarga',
-                id: 'CARGA-WEB-' + Date.now(),
-                origen: document.getElementById('emp-origen').value,
-                destino: document.getElementById('emp-destino').value,
-                vehiculo: document.getElementById('emp-vehiculo').value,
-                peso: document.getElementById('emp-tipo-carga').value,
-                estado: 'Disponible',
-                tarifa: 0,
-                contacto: document.getElementById('emp-nombre').value,
-                telefono: document.getElementById('emp-tel').value,
-                descripcion: "Solicitud Vía Web: " + document.getElementById('emp-detalles').value,
-                timestamp: new Date().toLocaleString('es-AR')
-            };
+      const payload = {
+        id: 'CARGA-' + Date.now(),
+        origen: document.getElementById('dador_origen').value.trim(),
+        destino: document.getElementById('dador_destino').value.trim(),
+        vehiculo: document.getElementById('dador_vehiculo').value,
+        peso: document.getElementById('dador_peso').value.trim() || 'General',
+        estado: 'Disponible',
+        tarifa: String(Number(document.getElementById('dador_tarifa').value) || 0),
+        contacto: document.getElementById('dador_contacto').value.trim(),
+        telefono: document.getElementById('dador_telefono').value.trim(),
+        descripcion: document.getElementById('dador_desc').value.trim()
+      };
 
-            try {
-                await fetch(WEBHOOK_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) });
-                alert("Solicitud enviada a la mesa de operaciones de Nivel 9. Te cotizaremos a la brevedad vía WhatsApp.");
-                cerrarModales();
-                e.target.reset();
-            } catch (err) {
-                alert("Fallo de conexión. Por favor utiliza el botón flotante de WhatsApp para comunicarte directo.");
-            } finally {
-                btn.innerHTML = textoOriginal; btn.disabled = false;
-            }
-        }
+      try {
+        if (!supabase) throw new Error('Cliente Supabase no inicializado');
+        const { error } = await supabase.from('bolsa_cargas').insert([payload]);
+        if (error) throw error;
 
-        async function actualizarDisponibilidad(e) {
-            e.preventDefault();
-            const btn = e.target.querySelector('button[type="submit"]');
-            const ubicacion = document.getElementById('ce-ubicacion').value;
-            
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Actualizando GPS...'; btn.disabled = true;
-            
-            setTimeout(() => {
-                alert("¡Ubicación Actualizada en la Mesa de Nivel 9! Estamos buscando cruces logísticos para sacarte de " + ubicacion + ".");
-                cerrarModales();
-                e.target.reset();
-                btn.innerHTML = '<i class="fas fa-satellite-dish"></i> Emitir Señal de Carga'; btn.disabled = false;
-            }, 1500);
-        }
-    </script>
+        mostrarModal(
+          '📦',
+          '¡Carga Publicada con Éxito!',
+          `Tu requerimiento para el tramo <b>${payload.origen} ➔ ${payload.destino}</b> ya está visible en nuestra Bolsa de Cargas 3PL. Nuestro equipo de despacho asignará la unidad correspondiente a la brevedad.`
+        );
+        document.getElementById('formDador').reset();
+      } catch (err) {
+        alert('Error al publicar carga: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Publicar en Bolsa de Cargas';
+      }
+    }
+
+    // =========================================================================
+    // 2. ENVÍO DE TRANSPORTISTAS -> TABLA "transportistas" EN SUPABASE
+    // =========================================================================
+    async function enviarTransportista(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnSubmitTransp');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registrando unidad...';
+
+      const payload = {
+        id: 'TRANSP-' + Date.now(),
+        nombre: document.getElementById('tr_nombre').value.trim(),
+        telefono: document.getElementById('tr_telefono').value.trim(),
+        ubicacion: document.getElementById('tr_ubicacion').value.trim(),
+        tipo: document.getElementById('tr_tipo').value,
+        marca_modelo: document.getElementById('tr_modelo').value.trim() || 'General',
+        carroceria: document.getElementById('tr_carroceria').value,
+        capacidad: document.getElementById('tr_capacidad').value.trim() || 'Estándar',
+        patente: document.getElementById('tr_patente').value.trim().toUpperCase(),
+        patente_acoplado: document.getElementById('tr_acoplado').value.trim().toUpperCase()
+      };
+
+      try {
+        if (!supabase) throw new Error('Cliente Supabase no inicializado');
+        const { error } = await supabase.from('transportistas').insert([payload]);
+        if (error) throw error;
+
+        mostrarModal(
+          '🚛',
+          '¡Unidad Registrada en la Red!',
+          `Bienvenido <b>${payload.nombre}</b>. Tu vehículo (${payload.tipo} - Patente: ${payload.patente}) ha sido incorporado a nuestra red de flota activa. Comenzarás a recibir viajes compatibles con tu base operativa.`
+        );
+        document.getElementById('formTransp').reset();
+      } catch (err) {
+        alert('Error al registrar transportista: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-check-circle"></i> Registrarme en la Red Nivel 9';
+      }
+    }
+
+    // Control del Modal
+    function mostrarModal(icono, titulo, desc) {
+      document.getElementById('modalIcon').innerText = icono;
+      document.getElementById('modalTitle').innerText = titulo;
+      document.getElementById('modalDesc').innerHTML = desc;
+      document.getElementById('modalExito').style.display = 'flex';
+    }
+
+    function cerrarModal() {
+      document.getElementById('modalExito').style.display = 'none';
+    }
+  </script>
 </body>
 </html>
