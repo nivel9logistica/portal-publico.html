@@ -26,9 +26,9 @@
       --text-muted: #a1a1aa;
       --text-dim: #71717a;
       --broker-color: #3b82f6;
-      --broker-glow: rgba(59, 130, 246, 0.2);
+      --broker-glow: rgba(59, 130, 246, 0.25);
       --transp-color: #10b981;
-      --transp-glow: rgba(16, 185, 129, 0.2);
+      --transp-glow: rgba(16, 185, 129, 0.25);
     }
 
     * {
@@ -91,12 +91,12 @@
       margin-top: 4px;
     }
 
-    /* PANTALLA INICIAL: BOTONES PRINCIPALES */
+    /* VISTA 1: BOTONES PRINCIPALES EN PANTALLA DE INICIO */
     .selector-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 18px;
-      margin-top: 24px;
+      margin-top: 20px;
     }
 
     @media (min-width: 640px) {
@@ -109,7 +109,7 @@
       background: var(--card-bg);
       border: 2px solid var(--card-border);
       border-radius: 16px;
-      padding: 32px 20px;
+      padding: 34px 20px;
       text-align: center;
       cursor: pointer;
       transition: all 0.25s ease;
@@ -135,8 +135,8 @@
     }
 
     .choice-icon {
-      width: 64px;
-      height: 64px;
+      width: 66px;
+      height: 66px;
       border-radius: 14px;
       display: flex;
       align-items: center;
@@ -192,7 +192,7 @@
       border: 1px solid var(--transp-color);
     }
 
-    /* PANTALLA DE FORMULARIOS */
+    /* VISTA 2 Y 3: CONTENEDORES DE FORMULARIO */
     .card-form {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
@@ -213,15 +213,17 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
-      padding-bottom: 12px;
+      padding-bottom: 14px;
       border-bottom: 1px solid var(--card-border);
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
     .btn-volver {
       background: #27272a;
       border: 1px solid #3f3f46;
       color: #d4d4d8;
-      padding: 7px 14px;
+      padding: 8px 16px;
       border-radius: 8px;
       font-size: 0.85rem;
       font-weight: 700;
@@ -238,7 +240,7 @@
     }
 
     .form-section-title {
-      font-size: 1.15rem;
+      font-size: 1.18rem;
       font-weight: 800;
       color: var(--text-white);
       display: flex;
@@ -292,7 +294,7 @@
       box-shadow: 0 0 0 2px var(--brand-glow);
     }
 
-    /* CAMPO DESTACADO DE OFERTA DE TARIFA */
+    /* CAJA ESPECIAL: OFERTA DE TARIFA DADOR */
     .oferta-tarifa-box {
       background: #0d1527;
       border: 1px solid #1e3a8a;
@@ -369,7 +371,7 @@
       transform: translateY(-2px);
     }
 
-    /* MODAL DE ÉXITO */
+    /* MODAL DE CONFIRMACIÓN */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -429,7 +431,7 @@
 <body>
 
   <div class="container">
-    <!-- ENCABEZADO CORPORATIVO -->
+    <!-- ENCABEZADO CORPORATIVO ORIGINAL -->
     <div class="header-box">
       <div class="badge-sub">Portal Oficial Nivel 9</div>
       <svg class="brand-logo-svg" viewBox="0 0 280 115">
@@ -447,19 +449,17 @@
     </div>
 
     <!-- ========================================================
-         VISTA 1: BOTONES DE SELECCIÓN INICIAL (SOLO ESTO AL INICIO)
+         VISTA 1: BOTONES PRINCIPALES (ÚNICO VISIBLE AL INICIAR)
          ======================================================== -->
     <div id="vistaSeleccion" class="selector-grid">
-      <!-- Tarjeta Dador -->
-      <div class="choice-card card-dador" onclick="abrirFormulario('dador')">
+      <div class="choice-card card-dador" onclick="window.abrirFormulario('dador')">
         <div class="choice-icon"><i class="fas fa-boxes"></i></div>
         <h2 class="choice-title">Soy Dador de Carga</h2>
         <p class="choice-desc">Publicar flete, carga general o viaje corporativo</p>
         <div class="choice-action-btn">Ingresar Requerimiento <i class="fas fa-arrow-right"></i></div>
       </div>
 
-      <!-- Tarjeta Transportista -->
-      <div class="choice-card card-transp" onclick="abrirFormulario('transp')">
+      <div class="choice-card card-transp" onclick="window.abrirFormulario('transp')">
         <div class="choice-icon"><i class="fas fa-truck-moving"></i></div>
         <h2 class="choice-title">Soy Transportista</h2>
         <p class="choice-desc">Registrar unidad / Recibir ofertas de viaje</p>
@@ -475,12 +475,12 @@
         <div class="form-section-title" style="color:var(--broker-color);">
           <i class="fas fa-bullhorn"></i> Publicar Oferta de Carga (Bolsa 3PL)
         </div>
-        <button type="button" class="btn-volver" onclick="volverInicio()">
+        <button type="button" class="btn-volver" onclick="window.volverInicio()">
           <i class="fas fa-arrow-left"></i> Cambiar Perfil
         </button>
       </div>
 
-      <form id="formDador" onsubmit="enviarCarga(event)">
+      <form id="formDador" onsubmit="window.enviarCarga(event)">
         <div class="form-grid two-cols">
           <div class="form-group">
             <label>Empresa / Contacto Responsable *</label>
@@ -545,12 +545,12 @@
         <div class="form-section-title" style="color:var(--transp-color);">
           <i class="fas fa-id-card"></i> Registro de Unidad en Red de Flota
         </div>
-        <button type="button" class="btn-volver" onclick="volverInicio()">
+        <button type="button" class="btn-volver" onclick="window.volverInicio()">
           <i class="fas fa-arrow-left"></i> Cambiar Perfil
         </button>
       </div>
 
-      <form id="formTransp" onsubmit="enviarTransportista(event)">
+      <form id="formTransp" onsubmit="window.enviarTransportista(event)">
         <div class="form-grid two-cols">
           <div class="form-group">
             <label>Nombre del Titular / Chofer *</label>
@@ -617,25 +617,27 @@
       <div class="modal-icon" id="modalIcon">✅</div>
       <h2 class="modal-title" id="modalTitle">¡Registro Exitoso!</h2>
       <p class="modal-desc" id="modalDesc">Los datos han sido incorporados en tiempo real al sistema operativo de Nivel 9.</p>
-      <button class="btn-modal-close" onclick="cerrarModal()">Aceptar y Continuar</button>
+      <button type="button" class="btn-modal-close" onclick="window.cerrarModal()">Aceptar y Continuar</button>
     </div>
   </div>
 
   <script>
- <script>
-    // =========================================================================
-    // CREDENCIALES OFICIALES SUPABASE (VARIABLE RENOMBRADA: sbClient)
-    // =========================================================================
-    const SUPABASE_URL = 'https://yfrgqyezynojohqgkxjt.supabase.co';
-    const SUPABASE_ANON_KEY = 'sb_publishable_JAp9zWYr_ugkEkVg0WPI5A_gaA5I0sL';
+    // CREDENCIALES OFICIALES SUPABASE
+    const CONFIG_URL = 'https://yfrgqyezynojohqgkxjt.supabase.co';
+    const CONFIG_KEY = 'sb_publishable_JAp9zWYr_ugkEkVg0WPI5A_gaA5I0sL';
 
-    // Usamos sbClient para evitar cualquier conflicto con window.supabase
-    const sbClient = (window.supabase && typeof window.supabase.createClient === 'function')
-      ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-      : null;
+    // Inicializador seguro del cliente Supabase
+    function obtenerCliente() {
+      if (window._instanciaSupabase) return window._instanciaSupabase;
+      if (window.supabase && typeof window.supabase.createClient === 'function') {
+        window._instanciaSupabase = window.supabase.createClient(CONFIG_URL, CONFIG_KEY);
+        return window._instanciaSupabase;
+      }
+      return null;
+    }
 
-    // Control de navegación entre vistas
-    function abrirFormulario(tipo) {
+    // Funciones globales expuestas directamente a window
+    window.abrirFormulario = function(tipo) {
       document.getElementById('vistaSeleccion').style.display = 'none';
       if (tipo === 'dador') {
         document.getElementById('formDadorContainer').style.display = 'block';
@@ -645,19 +647,29 @@
         document.getElementById('formDadorContainer').style.display = 'none';
       }
       window.scrollTo(0, 0);
-    }
+    };
 
-    function volverInicio() {
+    window.volverInicio = function() {
       document.getElementById('formDadorContainer').style.display = 'none';
       document.getElementById('formTranspContainer').style.display = 'none';
       document.getElementById('vistaSeleccion').style.display = 'grid';
       window.scrollTo(0, 0);
-    }
+    };
 
-    // =========================================================================
-    // 1. INSERCIÓN DE DADORES -> TABLA "bolsa_cargas"
-    // =========================================================================
-    async function enviarCarga(e) {
+    window.mostrarModal = function(icono, titulo, desc) {
+      document.getElementById('modalIcon').innerText = icono;
+      document.getElementById('modalTitle').innerText = titulo;
+      document.getElementById('modalDesc').innerHTML = desc;
+      document.getElementById('modalExito').style.display = 'flex';
+    };
+
+    window.cerrarModal = function() {
+      document.getElementById('modalExito').style.display = 'none';
+      window.volverInicio();
+    };
+
+    // 1. Inserción Dadores -> tabla "bolsa_cargas"
+    window.enviarCarga = async function(e) {
       e.preventDefault();
       const btn = document.getElementById('btnSubmitDador');
       btn.disabled = true;
@@ -677,15 +689,17 @@
       };
 
       try {
-        if (!sbClient) throw new Error('Cliente Supabase no inicializado');
-        const { error } = await sbClient.from('bolsa_cargas').insert([payload]);
+        const cliente = obtenerCliente();
+        if (!cliente) throw new Error('No se pudo inicializar la conexión a la base de datos.');
+
+        const { error } = await cliente.from('bolsa_cargas').insert([payload]);
         if (error) throw error;
 
         const tarifaFormateada = Number(payload.tarifa) > 0 
           ? ` por <b>$${Number(payload.tarifa).toLocaleString('es-AR')}</b>` 
           : ' (A cotizar)';
 
-        mostrarModal(
+        window.mostrarModal(
           '📦',
           '¡Carga Publicada con Éxito!',
           `Tu oferta de carga para el tramo <b>${payload.origen} ➔ ${payload.destino}</b>${tarifaFormateada} ya está visible en nuestra Bolsa de Cargas 3PL. Nuestro equipo de operaciones la evaluará con la flota disponible.`
@@ -697,12 +711,10 @@
         btn.disabled = false;
         btn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Publicar en Bolsa de Cargas';
       }
-    }
+    };
 
-    // =========================================================================
-    // 2. INSERCIÓN DE TRANSPORTISTAS -> TABLA "transportistas"
-    // =========================================================================
-    async function enviarTransportista(e) {
+    // 2. Inserción Transportistas -> tabla "transportistas"
+    window.enviarTransportista = async function(e) {
       e.preventDefault();
       const btn = document.getElementById('btnSubmitTransp');
       btn.disabled = true;
@@ -722,11 +734,13 @@
       };
 
       try {
-        if (!sbClient) throw new Error('Cliente Supabase no inicializado');
-        const { error } = await sbClient.from('transportistas').insert([payload]);
+        const cliente = obtenerCliente();
+        if (!cliente) throw new Error('No se pudo inicializar la conexión a la base de datos.');
+
+        const { error } = await cliente.from('transportistas').insert([payload]);
         if (error) throw error;
 
-        mostrarModal(
+        window.mostrarModal(
           '🚛',
           '¡Unidad Registrada en la Red!',
           `Bienvenido <b>${payload.nombre}</b>. Tu vehículo (${payload.tipo} - Patente: ${payload.patente}) ha sido incorporado a nuestra red de flota activa. Comenzarás a recibir viajes compatibles con tu base operativa.`
@@ -738,20 +752,7 @@
         btn.disabled = false;
         btn.innerHTML = '<i class="fas fa-check-circle"></i> Registrarme en la Red Nivel 9';
       }
-    }
-
-    // Control del Modal
-    function mostrarModal(icono, titulo, desc) {
-      document.getElementById('modalIcon').innerText = icono;
-      document.getElementById('modalTitle').innerText = titulo;
-      document.getElementById('modalDesc').innerHTML = desc;
-      document.getElementById('modalExito').style.display = 'flex';
-    }
-
-    function cerrarModal() {
-      document.getElementById('modalExito').style.display = 'none';
-      volverInicio();
-    }
+    };
   </script>
 </body>
 </html>
