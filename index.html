@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portal Público Logístico | Nivel 9</title>
+  <title>Portal Logístico Federal | Nivel 9</title>
   
   <!-- Tipografía Outfit & Iconografía FontAwesome -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -89,7 +89,7 @@
       margin-top: 4px;
     }
 
-    /* SELECTOR DE PERFIL (TABS PRINCIPALES) */
+    /* SELECTOR DE PERFILES */
     .profile-tabs {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -114,7 +114,6 @@
     .tab-btn i {
       font-size: 1.6rem;
       color: var(--text-dim);
-      transition: color 0.2s;
     }
 
     .tab-btn h3 {
@@ -181,9 +180,6 @@
       .form-grid.two-cols {
         grid-template-columns: 1fr 1fr;
       }
-      .form-grid.three-cols {
-        grid-template-columns: 1fr 1fr 1fr;
-      }
     }
 
     .form-group {
@@ -218,6 +214,47 @@
     input:focus, select:focus, textarea:focus {
       border-color: var(--brand);
       box-shadow: 0 0 0 2px var(--brand-glow);
+    }
+
+    /* CAJA ESPECIAL: OFERTAR TARIFA DADOR */
+    .oferta-tarifa-box {
+      background: #0e1726;
+      border: 1px solid #1e3a8a;
+      border-radius: 10px;
+      padding: 16px;
+      margin-top: 4px;
+    }
+
+    .oferta-tarifa-box label {
+      color: #60a5fa;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .oferta-tarifa-box input {
+      background: #090d16;
+      border: 1px solid #2563eb;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #93c5fd;
+      margin-top: 6px;
+    }
+
+    .oferta-aclaracion {
+      font-size: 0.78rem;
+      color: #94a3b8;
+      margin-top: 8px;
+      line-height: 1.45;
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .oferta-aclaracion i {
+      color: #38bdf8;
+      margin-top: 2px;
     }
 
     .btn-submit {
@@ -255,7 +292,7 @@
       transform: translateY(-2px);
     }
 
-    /* MODAL DE CONFIRMACIÓN */
+    /* MODAL DE ÉXITO */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -315,7 +352,7 @@
 <body>
 
   <div class="container">
-    <!-- CABECERA CON IDENTIDAD CORPORATIVA -->
+    <!-- CABECERA CORPORATIVA -->
     <div class="header-box">
       <div class="badge-sub">Portal Oficial de Operaciones 3PL</div>
       <svg class="brand-logo-svg" viewBox="0 0 280 115">
@@ -337,7 +374,7 @@
       <div class="tab-btn active-dador" id="tabDador" onclick="cambiarPerfil('dador')">
         <i class="fas fa-boxes"></i>
         <h3>Soy Dador de Carga</h3>
-        <p>Publicar flete, mudanza o viaje corporativo</p>
+        <p>Publicar flete, carga general o viaje corporativo</p>
       </div>
       <div class="tab-btn" id="tabTransp" onclick="cambiarPerfil('transp')">
         <i class="fas fa-truck-moving"></i>
@@ -351,14 +388,14 @@
          ======================================================== -->
     <div id="formDadorContainer" class="card">
       <div class="card-title title-dador">
-        <i class="fas fa-bullhorn" style="color:var(--broker-color);"></i> Publicar Nueva Oferta de Carga (Bolsa 3PL)
+        <i class="fas fa-bullhorn" style="color:var(--broker-color);"></i> Publicar Oferta de Carga (Bolsa 3PL)
       </div>
 
       <form id="formDador" onsubmit="enviarCarga(event)">
         <div class="form-grid two-cols">
           <div class="form-group">
             <label>Empresa / Contacto Responsable *</label>
-            <input type="text" id="dador_contacto" placeholder="Ej: Logística Arcor / Mario Casas" required />
+            <input type="text" id="dador_contacto" placeholder="Ej: Logística Arcor / Juan Rossi" required />
           </div>
           <div class="form-group">
             <label>Teléfono Celular / WhatsApp *</label>
@@ -373,7 +410,7 @@
             <input type="text" id="dador_destino" placeholder="Ej: Rosario, Santa Fe" required />
           </div>
           <div class="form-group">
-            <label>Tipo de Vehículo Requerido *</label>
+            <label>Tipo de Unidad Requerida *</label>
             <select id="dador_vehiculo" required>
               <option value="Furgón">Furgón (Sprinter / Daily)</option>
               <option value="Chasis">Chasis</option>
@@ -384,15 +421,24 @@
           </div>
           <div class="form-group">
             <label>Peso / Volumen Estimado</label>
-            <input type="text" id="dador_peso" placeholder="Ej: 14 Pallets / 12 Tn / 20 m³" />
+            <input type="text" id="dador_peso" placeholder="Ej: 14 Pallets / 12 Tn / 25 m³" />
           </div>
+
+          <!-- CAMPO DESTACADO DE OFERTA DE TARIFA -->
           <div class="form-group full">
-            <label>Tarifa Neta Ofertada al Transporte ($ ARS)</label>
-            <input type="number" id="dador_tarifa" placeholder="Ej: 850000 (Dejar en 0 si es a cotizar)" />
+            <div class="oferta-tarifa-box">
+              <label><i class="fas fa-hand-holding-usd"></i> Tarifa Ofertada / Presupuesto Dispuesto a Pagar ($ ARS)</label>
+              <input type="number" id="dador_tarifa" placeholder="Ej: 850000 (Ingresar importe o dejar en 0 si es a cotizar)" />
+              <div class="oferta-aclaracion">
+                <i class="fas fa-info-circle"></i>
+                <span><b>Condición Comercial:</b> Esta tarifa será presentada de inmediato a nuestra red de transportistas verificados. De no ser aceptada o requerir ajuste según mercado y disponibilidad, el equipo operativo de Nivel 9 se pondrá en contacto con usted para informarle las mejores contraofertas disponibles en la ruta.</span>
+              </div>
+            </div>
           </div>
+
           <div class="form-group full">
-            <label>Detalle Técnico de la Carga y Requisitos Operativos</label>
-            <textarea id="dador_desc" rows="3" placeholder="Ej: Pallets cerrados con film, requiere lona y fajas. Carga el día viernes 08:00 hs..."></textarea>
+            <label>Detalle Técnico de la Mercadería y Requisitos de Carga</label>
+            <textarea id="dador_desc" rows="3" placeholder="Ej: Carga paletizada con film, requiere control de precintos y fajas. Horario de carga disponible: 08:00 a 14:00 hs..."></textarea>
           </div>
         </div>
 
@@ -483,7 +529,7 @@
 
   <script>
     // =========================================================================
-    // CONEXIÓN DIRECTA CON SUPABASE (TUS CREDENCIALES EXACTAS)
+    // CONEXIÓN DIRECTA CON SUPABASE (CREDENCIALES ACTIVAS)
     // =========================================================================
     const SUPABASE_URL = 'https://yfrgqyezynojohqgkxjt.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_JAp9zWYr_ugkEkVg0WPI5A_gaA5I0sL';
@@ -492,7 +538,6 @@
       ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
       : null;
 
-    // Conmutador de perfiles
     function cambiarPerfil(perfil) {
       const tabDador = document.getElementById('tabDador');
       const tabTransp = document.getElementById('tabTransp');
@@ -513,7 +558,7 @@
     }
 
     // =========================================================================
-    // 1. ENVÍO DE DADORES -> TABLA "bolsa_cargas" EN SUPABASE
+    // 1. DADORES -> TABLA "bolsa_cargas"
     // =========================================================================
     async function enviarCarga(e) {
       e.preventDefault();
@@ -539,10 +584,14 @@
         const { error } = await supabase.from('bolsa_cargas').insert([payload]);
         if (error) throw error;
 
+        const tarifaFormateada = Number(payload.tarifa) > 0 
+          ? ` por <b>$${Number(payload.tarifa).toLocaleString('es-AR')}</b>` 
+          : ' (A cotizar)';
+
         mostrarModal(
           '📦',
           '¡Carga Publicada con Éxito!',
-          `Tu requerimiento para el tramo <b>${payload.origen} ➔ ${payload.destino}</b> ya está visible en nuestra Bolsa de Cargas 3PL. Nuestro equipo de despacho asignará la unidad correspondiente a la brevedad.`
+          `Tu oferta de carga para el tramo <b>${payload.origen} ➔ ${payload.destino}</b>${tarifaFormateada} ya está visible en nuestra Bolsa de Cargas 3PL. Nuestro equipo de operaciones la evaluará con la flota disponible.`
         );
         document.getElementById('formDador').reset();
       } catch (err) {
@@ -554,7 +603,7 @@
     }
 
     // =========================================================================
-    // 2. ENVÍO DE TRANSPORTISTAS -> TABLA "transportistas" EN SUPABASE
+    // 2. TRANSPORTISTAS -> TABLA "transportistas"
     // =========================================================================
     async function enviarTransportista(e) {
       e.preventDefault();
@@ -594,7 +643,6 @@
       }
     }
 
-    // Control del Modal
     function mostrarModal(icono, titulo, desc) {
       document.getElementById('modalIcon').innerText = icono;
       document.getElementById('modalTitle').innerText = titulo;
