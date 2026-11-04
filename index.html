@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portal Logístico Federal | Nivel 9</title>
+  <title>Registro de Dadores y Transportistas | Nivel 9</title>
   
   <!-- Tipografía Outfit & Iconografía FontAwesome -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,7 +26,9 @@
       --text-muted: #a1a1aa;
       --text-dim: #71717a;
       --broker-color: #3b82f6;
+      --broker-glow: rgba(59, 130, 246, 0.2);
       --transp-color: #10b981;
+      --transp-glow: rgba(16, 185, 129, 0.2);
     }
 
     * {
@@ -40,7 +42,7 @@
       background-color: var(--bg-dark);
       color: var(--text-white);
       line-height: 1.5;
-      padding: 20px 12px 60px;
+      padding: 24px 12px 60px;
     }
 
     .container {
@@ -48,11 +50,11 @@
       margin: 0 auto;
     }
 
-    /* CABECERA CORPORATIVA Y LOGO */
+    /* CABECERA CORPORATIVA ORIGINAL */
     .header-box {
       text-align: center;
-      margin-bottom: 24px;
-      padding-bottom: 16px;
+      margin-bottom: 28px;
+      padding-bottom: 18px;
       border-bottom: 1px solid var(--card-border);
     }
 
@@ -78,96 +80,170 @@
     }
 
     .header-title {
-      font-size: 1.5rem;
+      font-size: 1.55rem;
       font-weight: 800;
       color: var(--text-white);
     }
 
     .header-desc {
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       color: var(--text-muted);
       margin-top: 4px;
     }
 
-    /* SELECTOR DE PERFILES */
-    .profile-tabs {
+    /* PANTALLA INICIAL: BOTONES PRINCIPALES */
+    .selector-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 22px;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      margin-top: 24px;
     }
 
-    .tab-btn {
-      background: #111113;
+    @media (min-width: 640px) {
+      .selector-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .choice-card {
+      background: var(--card-bg);
       border: 2px solid var(--card-border);
-      border-radius: 12px;
-      padding: 16px 12px;
+      border-radius: 16px;
+      padding: 32px 20px;
       text-align: center;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.25s ease;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 6px;
-    }
-
-    .tab-btn i {
-      font-size: 1.6rem;
-      color: var(--text-dim);
-    }
-
-    .tab-btn h3 {
-      font-size: 1rem;
-      font-weight: 800;
-      color: var(--text-white);
-    }
-
-    .tab-btn p {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-    }
-
-    .tab-btn.active-dador {
-      border-color: var(--broker-color);
-      background: rgba(59, 130, 246, 0.08);
-    }
-    .tab-btn.active-dador i {
-      color: var(--broker-color);
-    }
-
-    .tab-btn.active-transp {
-      border-color: var(--transp-color);
-      background: rgba(16, 185, 129, 0.08);
-    }
-    .tab-btn.active-transp i {
-      color: var(--transp-color);
-    }
-
-    /* TARJETA DEL FORMULARIO */
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 24px;
+      gap: 12px;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
     }
 
-    .card-title {
+    .choice-card.card-dador:hover {
+      border-color: var(--broker-color);
+      background: #101726;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px var(--broker-glow);
+    }
+
+    .choice-card.card-transp:hover {
+      border-color: var(--transp-color);
+      background: #0f1f1a;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px var(--transp-glow);
+    }
+
+    .choice-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin-bottom: 4px;
+    }
+
+    .card-dador .choice-icon {
+      background: rgba(59, 130, 246, 0.15);
+      color: var(--broker-color);
+    }
+
+    .card-transp .choice-icon {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--transp-color);
+    }
+
+    .choice-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .choice-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .choice-action-btn {
+      margin-top: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .card-dador .choice-action-btn {
+      background: rgba(59, 130, 246, 0.15);
+      color: var(--broker-color);
+      border: 1px solid var(--broker-color);
+    }
+
+    .card-transp .choice-action-btn {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--transp-color);
+      border: 1px solid var(--transp-color);
+    }
+
+    /* PANTALLA DE FORMULARIOS */
+    .card-form {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      display: none;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .btn-volver {
+      background: #27272a;
+      border: 1px solid #3f3f46;
+      color: #d4d4d8;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-volver:hover {
+      background: #3f3f46;
+      color: #fff;
+    }
+
+    .form-section-title {
       font-size: 1.15rem;
       font-weight: 800;
       color: var(--text-white);
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 18px;
-      padding-left: 12px;
-    }
-
-    .title-dador {
-      border-left: 4px solid var(--broker-color);
-    }
-    .title-transp {
-      border-left: 4px solid var(--transp-color);
     }
 
     .form-grid {
@@ -216,9 +292,9 @@
       box-shadow: 0 0 0 2px var(--brand-glow);
     }
 
-    /* CAJA ESPECIAL: OFERTAR TARIFA DADOR */
+    /* CAMPO DESTACADO DE OFERTA DE TARIFA */
     .oferta-tarifa-box {
-      background: #0e1726;
+      background: #0d1527;
       border: 1px solid #1e3a8a;
       border-radius: 10px;
       padding: 16px;
@@ -234,7 +310,7 @@
     }
 
     .oferta-tarifa-box input {
-      background: #090d16;
+      background: #080c16;
       border: 1px solid #2563eb;
       font-size: 1.15rem;
       font-weight: 800;
@@ -257,6 +333,7 @@
       margin-top: 2px;
     }
 
+    /* BOTONES DE ENVÍO */
     .btn-submit {
       width: 100%;
       border: none;
@@ -352,9 +429,9 @@
 <body>
 
   <div class="container">
-    <!-- CABECERA CORPORATIVA -->
+    <!-- ENCABEZADO CORPORATIVO -->
     <div class="header-box">
-      <div class="badge-sub">Portal Oficial de Operaciones 3PL</div>
+      <div class="badge-sub">Portal Oficial Nivel 9</div>
       <svg class="brand-logo-svg" viewBox="0 0 280 115">
         <text x="140" y="72" text-anchor="middle" font-family="'Outfit', sans-serif" font-weight="800" font-size="70">
           <tspan fill="#ffffff">NIVEL</tspan>
@@ -365,30 +442,42 @@
           LOGISTICA DE EXCELENCIA
         </text>
       </svg>
-      <h1 class="header-title">Ecosistema Logístico Federal</h1>
-      <p class="header-desc">Publicá requerimientos de carga o sumá tus unidades de transporte a nuestra red activa.</p>
+      <h1 class="header-title">Registro de Dadores y Transportistas</h1>
+      <p class="header-desc">Bolsa de Cargas &amp; Red Federal de Transporte</p>
     </div>
 
-    <!-- SELECTOR DE PERFILES -->
-    <div class="profile-tabs">
-      <div class="tab-btn active-dador" id="tabDador" onclick="cambiarPerfil('dador')">
-        <i class="fas fa-boxes"></i>
-        <h3>Soy Dador de Carga</h3>
-        <p>Publicar flete, carga general o viaje corporativo</p>
+    <!-- ========================================================
+         VISTA 1: BOTONES DE SELECCIÓN INICIAL (SOLO ESTO AL INICIO)
+         ======================================================== -->
+    <div id="vistaSeleccion" class="selector-grid">
+      <!-- Tarjeta Dador -->
+      <div class="choice-card card-dador" onclick="abrirFormulario('dador')">
+        <div class="choice-icon"><i class="fas fa-boxes"></i></div>
+        <h2 class="choice-title">Soy Dador de Carga</h2>
+        <p class="choice-desc">Publicar flete, carga general o viaje corporativo</p>
+        <div class="choice-action-btn">Ingresar Requerimiento <i class="fas fa-arrow-right"></i></div>
       </div>
-      <div class="tab-btn" id="tabTransp" onclick="cambiarPerfil('transp')">
-        <i class="fas fa-truck-moving"></i>
-        <h3>Soy Transportista</h3>
-        <p>Registrar unidad / Recibir ofertas de viaje</p>
+
+      <!-- Tarjeta Transportista -->
+      <div class="choice-card card-transp" onclick="abrirFormulario('transp')">
+        <div class="choice-icon"><i class="fas fa-truck-moving"></i></div>
+        <h2 class="choice-title">Soy Transportista</h2>
+        <p class="choice-desc">Registrar unidad / Recibir ofertas de viaje</p>
+        <div class="choice-action-btn">Registrar Unidad <i class="fas fa-arrow-right"></i></div>
       </div>
     </div>
 
     <!-- ========================================================
-         FORMULARIO 1: DADORES DE CARGA (BOLSA DE CARGAS)
+         VISTA 2: FORMULARIO DADORES DE CARGA (BOLSA DE CARGAS)
          ======================================================== -->
-    <div id="formDadorContainer" class="card">
-      <div class="card-title title-dador">
-        <i class="fas fa-bullhorn" style="color:var(--broker-color);"></i> Publicar Oferta de Carga (Bolsa 3PL)
+    <div id="formDadorContainer" class="card-form">
+      <div class="form-topbar">
+        <div class="form-section-title" style="color:var(--broker-color);">
+          <i class="fas fa-bullhorn"></i> Publicar Oferta de Carga (Bolsa 3PL)
+        </div>
+        <button type="button" class="btn-volver" onclick="volverInicio()">
+          <i class="fas fa-arrow-left"></i> Cambiar Perfil
+        </button>
       </div>
 
       <form id="formDador" onsubmit="enviarCarga(event)">
@@ -449,11 +538,16 @@
     </div>
 
     <!-- ========================================================
-         FORMULARIO 2: TRANSPORTISTAS (RED DE TRANSPORTE)
+         VISTA 3: FORMULARIO TRANSPORTISTAS (RED DE TRANSPORTE)
          ======================================================== -->
-    <div id="formTranspContainer" class="card" style="display:none;">
-      <div class="card-title title-transp">
-        <i class="fas fa-id-card" style="color:var(--transp-color);"></i> Registro de Unidad en Red de Flota
+    <div id="formTranspContainer" class="card-form">
+      <div class="form-topbar">
+        <div class="form-section-title" style="color:var(--transp-color);">
+          <i class="fas fa-id-card"></i> Registro de Unidad en Red de Flota
+        </div>
+        <button type="button" class="btn-volver" onclick="volverInicio()">
+          <i class="fas fa-arrow-left"></i> Cambiar Perfil
+        </button>
       </div>
 
       <form id="formTransp" onsubmit="enviarTransportista(event)">
@@ -529,7 +623,7 @@
 
   <script>
     // =========================================================================
-    // CONEXIÓN DIRECTA CON SUPABASE (CREDENCIALES ACTIVAS)
+    // CREDENCIALES OFICIALES SUPABASE
     // =========================================================================
     const SUPABASE_URL = 'https://yfrgqyezynojohqgkxjt.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_JAp9zWYr_ugkEkVg0WPI5A_gaA5I0sL';
@@ -538,27 +632,28 @@
       ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
       : null;
 
-    function cambiarPerfil(perfil) {
-      const tabDador = document.getElementById('tabDador');
-      const tabTransp = document.getElementById('tabTransp');
-      const formDador = document.getElementById('formDadorContainer');
-      const formTransp = document.getElementById('formTranspContainer');
-
-      if (perfil === 'dador') {
-        tabDador.className = 'tab-btn active-dador';
-        tabTransp.className = 'tab-btn';
-        formDador.style.display = 'block';
-        formTransp.style.display = 'none';
+    // Control de navegación entre vistas
+    function abrirFormulario(tipo) {
+      document.getElementById('vistaSeleccion').style.display = 'none';
+      if (tipo === 'dador') {
+        document.getElementById('formDadorContainer').style.display = 'block';
+        document.getElementById('formTranspContainer').style.display = 'none';
       } else {
-        tabDador.className = 'tab-btn';
-        tabTransp.className = 'tab-btn active-transp';
-        formDador.style.display = 'none';
-        formTransp.style.display = 'block';
+        document.getElementById('formTranspContainer').style.display = 'block';
+        document.getElementById('formDadorContainer').style.display = 'none';
       }
+      window.scrollTo(0, 0);
+    }
+
+    function volverInicio() {
+      document.getElementById('formDadorContainer').style.display = 'none';
+      document.getElementById('formTranspContainer').style.display = 'none';
+      document.getElementById('vistaSeleccion').style.display = 'grid';
+      window.scrollTo(0, 0);
     }
 
     // =========================================================================
-    // 1. DADORES -> TABLA "bolsa_cargas"
+    // 1. INSERCIÓN DE DADORES -> TABLA "bolsa_cargas"
     // =========================================================================
     async function enviarCarga(e) {
       e.preventDefault();
@@ -603,7 +698,7 @@
     }
 
     // =========================================================================
-    // 2. TRANSPORTISTAS -> TABLA "transportistas"
+    // 2. INSERCIÓN DE TRANSPORTISTAS -> TABLA "transportistas"
     // =========================================================================
     async function enviarTransportista(e) {
       e.preventDefault();
@@ -643,6 +738,7 @@
       }
     }
 
+    // Funciones del Modal
     function mostrarModal(icono, titulo, desc) {
       document.getElementById('modalIcon').innerText = icono;
       document.getElementById('modalTitle').innerText = titulo;
@@ -652,6 +748,7 @@
 
     function cerrarModal() {
       document.getElementById('modalExito').style.display = 'none';
+      volverInicio();
     }
   </script>
 </body>
